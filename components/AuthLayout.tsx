@@ -42,7 +42,7 @@ const AuthLayout = ({ children }: AuthLayoutProps) => {
     <TouchableWithoutFeedbackContainer onPress={handleHideKeyboard} disabled={Platform.OS === "web"}>
       <Container>
         <LogoContainer>
-          <LogoImage source={require("../assets/instagram_logo3.png")} resizeMode="contain"></LogoImage>
+          <LogoImage source={require("../assets/instagram_logo.png")} resizeMode="contain"></LogoImage>
         </LogoContainer>
         <KeyboardAvoidingViewContainer behavior={Platform.OS === "ios" ? "padding" : "height"} keyboardVerticalOffset={Platform.OS === "ios" ? 50 : -50}>
           {children}
