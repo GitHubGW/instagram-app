@@ -1,13 +1,17 @@
-import { Keyboard, TouchableWithoutFeedback } from "react-native";
+import { Keyboard, KeyboardAvoidingView, Platform, TouchableWithoutFeedback } from "react-native";
 import styled from "styled-components/native";
 
 interface AuthLayoutProps {
   children: React.ReactNode;
 }
 
-const Wrapper = styled(TouchableWithoutFeedback)`
+const TouchableWithoutFeedbackContainer = styled(TouchableWithoutFeedback)`
   flex: 1;
   background-color: black;
+`;
+
+const KeyboardAvoidingViewContainer = styled(KeyboardAvoidingView)`
+  width: 100%;
 `;
 
 const Container = styled.View`
@@ -35,14 +39,16 @@ const AuthLayout = ({ children }: AuthLayoutProps) => {
   };
 
   return (
-    <Wrapper onPress={handleHideKeyboard}>
+    <TouchableWithoutFeedbackContainer onPress={handleHideKeyboard} disabled={Platform.OS === "web"}>
       <Container>
         <LogoContainer>
           <LogoImage source={require("../assets/instagram_logo3.png")} resizeMode="contain"></LogoImage>
         </LogoContainer>
-        {children}
+        <KeyboardAvoidingViewContainer behavior={Platform.OS === "ios" ? "padding" : "height"} keyboardVerticalOffset={Platform.OS === "ios" ? 50 : -50}>
+          {children}
+        </KeyboardAvoidingViewContainer>
       </Container>
-    </Wrapper>
+    </TouchableWithoutFeedbackContainer>
   );
 };
 
