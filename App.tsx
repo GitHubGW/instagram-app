@@ -1,4 +1,4 @@
-import "react-native-gesture-handler";
+// import "react-native-gesture-handler";
 import { useEffect, useState } from "react";
 import AppLoading from "expo-app-loading";
 import Ionicons from "@expo/vector-icons/Ionicons";
@@ -9,12 +9,23 @@ import { NavigationContainer } from "@react-navigation/native";
 import { Appearance } from "react-native";
 import { darkTheme, lightTheme } from "./styles/themes";
 import { ThemeProvider } from "styled-components/native";
+import { ApolloProvider, useReactiveVar } from "@apollo/client";
+import client, { isLoggedInVar, tokenVar } from "./apollo";
+import LoggedInNav from "./navigators/LoggedInNav";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const App = () => {
   const [currentTheme, setCurrentTheme] = useState<"light" | "dark">("light");
   const [loading, setLoading] = useState<boolean>(true);
+  const isLoggedIn: boolean = useReactiveVar(isLoggedInVar);
 
   const startAsync = async (): Promise<void> => {
+    const token: string | null = await AsyncStorage.getItem("token");
+    if (token) {
+      isLoggedInVar(true);
+      tokenVar(token);
+    }
+
     const ioniconsFontArray: { [key: string]: any }[] = [Ionicons.font];
     const loadedIoniconsFont: Promise<void>[] = ioniconsFontArray.map((ioniconsFont: { [key: string]: any }) => Font.loadAsync(ioniconsFont));
     const imageArray: string[] = [
@@ -49,11 +60,11 @@ const App = () => {
       {loading === true ? (
         <AppLoading startAsync={startAsync} onFinish={onFinish} onError={onError} />
       ) : (
-        <ThemeProvider theme={currentTheme === "light" ? lightTheme : darkTheme}>
-          <NavigationContainer>
-            <LoggedOutNav></LoggedOutNav>
-          </NavigationContainer>
-        </ThemeProvider>
+        <ApolloProvider client={client}>
+          <ThemeProvider theme={currentTheme === "light" ? lightTheme : darkTheme}>
+            <NavigationContainer>{isLoggedIn === true ? <LoggedInNav></LoggedInNav> : <LoggedOutNav></LoggedOutNav>}</NavigationContainer>
+          </ThemeProvider>
+        </ApolloProvider>
       )}
     </>
   );
