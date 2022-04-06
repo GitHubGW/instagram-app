@@ -1,17 +1,17 @@
-// import "react-native-gesture-handler";
+import "react-native-gesture-handler";
 import { useEffect, useState } from "react";
 import AppLoading from "expo-app-loading";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import * as Font from "expo-font";
 import { Asset } from "expo-asset";
-import LoggedOutNav from "./navigators/LoggedOutNav";
 import { NavigationContainer } from "@react-navigation/native";
-import { Appearance } from "react-native";
+import { Appearance, StatusBar } from "react-native";
 import { darkTheme, lightTheme } from "./styles/themes";
 import { ThemeProvider } from "styled-components/native";
 import { ApolloProvider, useReactiveVar } from "@apollo/client";
+import LoggedInNavigation from "./navigators/LoggedInNavigation";
+import LoggedOutNavigation from "./navigators/LoggedOutNavigation";
 import client, { isLoggedInVar, tokenVar } from "./apollo";
-import LoggedInNav from "./navigators/LoggedInNav";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const App = () => {
@@ -61,8 +61,9 @@ const App = () => {
         <AppLoading startAsync={startAsync} onFinish={onFinish} onError={onError} />
       ) : (
         <ApolloProvider client={client}>
+          <StatusBar barStyle="light-content" />
           <ThemeProvider theme={currentTheme === "light" ? lightTheme : darkTheme}>
-            <NavigationContainer>{isLoggedIn === true ? <LoggedInNav></LoggedInNav> : <LoggedOutNav></LoggedOutNav>}</NavigationContainer>
+            <NavigationContainer>{isLoggedIn === true ? <LoggedInNavigation></LoggedInNavigation> : <LoggedOutNavigation></LoggedOutNavigation>}</NavigationContainer>
           </ThemeProvider>
         </ApolloProvider>
       )}
