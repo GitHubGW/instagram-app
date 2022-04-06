@@ -1,5 +1,5 @@
-import { ActivityIndicator } from "react-native";
 import styled from "styled-components/native";
+import Loading from "./Loading";
 
 interface ButtonProps {
   onPress: () => void;
@@ -28,7 +28,7 @@ const Button = ({ onPress, text, size, bgFill, loading, disabled }: ButtonProps)
   return (
     <ButtonContainer onPress={onPress} disabled={disabled} bgFill={bgFill}>
       {loading === true ? (
-        <ActivityIndicator color="white"></ActivityIndicator>
+        <Loading />
       ) : (
         <ButtonText size={size} bgFill={bgFill}>
           {text}
