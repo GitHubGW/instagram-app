@@ -8,7 +8,7 @@ import { RootStackParamList } from "../shared/shared.types";
 import { useForm, Controller } from "react-hook-form";
 import { CreateAccountMutation, useCreateAccountMutation } from "../generated/graphql";
 
-type SignUpProps = NativeStackScreenProps<RootStackParamList, "SignUp">;
+type SignUpNavigationProps = NativeStackScreenProps<RootStackParamList, "StackSignUp">;
 
 interface SignUpFormData {
   email: string;
@@ -22,7 +22,7 @@ const Contaienr = styled.View`
   padding: 0 20px;
 `;
 
-const SignUp = ({ navigation }: SignUpProps) => {
+const SignUp = ({ navigation }: SignUpNavigationProps) => {
   const nameRef: MutableRefObject<null> = useRef(null);
   const usernameRef: MutableRefObject<null> = useRef(null);
   const passwordRef: MutableRefObject<null> = useRef(null);

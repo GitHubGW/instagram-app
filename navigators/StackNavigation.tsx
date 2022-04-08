@@ -2,11 +2,13 @@ import { createStackNavigator } from "@react-navigation/stack";
 import { Dimensions } from "react-native";
 import styled from "styled-components/native";
 import Feed from "../screens/Feed";
-import Likes from "../screens/Likes";
+import Notification from "../screens/Notification";
 import Me from "../screens/Me";
 import Photo from "../screens/Photo";
 import Profile from "../screens/Profile";
 import Search from "../screens/Search";
+import Likes from "../screens/Likes";
+import Comments from "../screens/Comments";
 
 interface StackNavigationProps {
   screenName: string;
@@ -48,10 +50,12 @@ const StackNavigation = ({ screenName }: StackNavigationProps) => {
         ></Stack.Screen>
       ) : null}
       {screenName === "StackSearch" ? <Stack.Screen name="StackSearch" component={Search}></Stack.Screen> : null}
-      {screenName === "StackLikes" ? <Stack.Screen name="StackLikes" component={Likes}></Stack.Screen> : null}
+      {screenName === "StackNotification" ? <Stack.Screen name="StackNotification" component={Notification}></Stack.Screen> : null}
       {screenName === "StackMe" ? <Stack.Screen name="StackMe" component={Me}></Stack.Screen> : null}
       <Stack.Screen name="StackProfile" component={Profile}></Stack.Screen>
       <Stack.Screen name="StackPhoto" component={Photo}></Stack.Screen>
+      <Stack.Screen name="StackLikes" component={Likes}></Stack.Screen>
+      <Stack.Screen name="StackComments" component={Comments}></Stack.Screen>
     </Stack.Navigator>
   );
 };

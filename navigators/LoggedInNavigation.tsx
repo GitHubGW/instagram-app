@@ -45,14 +45,14 @@ const LoggedInNav = () => {
         }}
       ></Tab.Screen>
       <Tab.Screen
-        name="TabLikes"
+        name="TabNotification"
         options={{
           tabBarIcon: ({ focused, color, size }): React.ReactNode => {
             return <Ionicons name={focused === true ? "heart" : "heart-outline"} size={26} color={color} />;
           },
         }}
       >
-        {() => <StackNavigation screenName="StackLikes"></StackNavigation>}
+        {() => <StackNavigation screenName="StackNotification"></StackNavigation>}
       </Tab.Screen>
       <Tab.Screen
         name="TabMe"

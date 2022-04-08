@@ -1,6 +1,10 @@
 export type RootStackParamList = {
-  Enter: undefined;
-  Login: { username: string; password: string } | undefined;
-  SignUp: undefined;
-  Photo: undefined;
+  StackEnter: undefined;
+  StackLogin: { username: string; password: string } | undefined;
+  StackSignUp: undefined;
+  StackPhoto: undefined;
+  StackProfile: undefined;
+  StackLikes: undefined;
+  StackComments: undefined;
+  [key: string]: any;
 };

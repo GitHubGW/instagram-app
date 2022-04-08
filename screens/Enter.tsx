@@ -4,7 +4,7 @@ import styled from "styled-components/native";
 import AuthLayout from "../components/AuthLayout";
 import Button from "../components/Button";
 
-type EnterProps = NativeStackScreenProps<RootStackParamList, "Enter">;
+type EnterNavigationProps = NativeStackScreenProps<RootStackParamList, "StackEnter">;
 
 const Container = styled.View`
   width: 100%;
@@ -14,13 +14,13 @@ const ButtonsContainer = styled.View`
   padding: 0 20px;
 `;
 
-const Enter = ({ navigation }: EnterProps) => {
+const Enter = ({ navigation }: EnterNavigationProps) => {
   const onPressLogin = (): void => {
-    navigation.navigate("Login");
+    navigation.navigate("StackLogin");
   };
 
   const onPressSignUp = (): void => {
-    return navigation.navigate("SignUp");
+    return navigation.navigate("StackSignUp");
   };
 
   return (

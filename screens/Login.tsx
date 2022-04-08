@@ -9,7 +9,7 @@ import { useForm, Controller } from "react-hook-form";
 import { LoginMutation, useLoginMutation } from "../generated/graphql";
 import { handleLogin } from "../apollo";
 
-type LoginProps = NativeStackScreenProps<RootStackParamList, "Login">;
+type LoginNavigationProps = NativeStackScreenProps<RootStackParamList, "StackLogin">;
 
 interface LoginFormData {
   username: string;
@@ -21,7 +21,7 @@ const Contaienr = styled.View`
   padding: 0 20px;
 `;
 
-const Login = ({ route }: LoginProps) => {
+const Login = ({ route }: LoginNavigationProps) => {
   const passwordRef: MutableRefObject<null> = useRef(null);
   const { control, handleSubmit, getValues, watch } = useForm<LoginFormData>({
     defaultValues: { username: route.params?.username, password: route.params?.password },

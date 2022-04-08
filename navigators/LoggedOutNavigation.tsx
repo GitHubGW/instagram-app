@@ -17,9 +17,9 @@ const LoggedOutNav = () => {
         headerTintColor: "white",
       }}
     >
-      <Stack.Screen name="Enter" component={Enter}></Stack.Screen>
-      <Stack.Screen name="Login" component={Login}></Stack.Screen>
-      <Stack.Screen name="SignUp" component={SignUp}></Stack.Screen>
+      <Stack.Screen name="StackEnter" component={Enter}></Stack.Screen>
+      <Stack.Screen name="StackLogin" component={Login}></Stack.Screen>
+      <Stack.Screen name="StackSignUp" component={SignUp}></Stack.Screen>
     </Stack.Navigator>
   );
 };
