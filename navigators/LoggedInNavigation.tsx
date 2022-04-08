@@ -15,7 +15,7 @@ const LoggedInNav = () => {
       screenOptions={{
         headerShown: false,
         tabBarShowLabel: false,
-        tabBarStyle: { backgroundColor: isDarkMode === "dark" ? "rgb(4,4,4)" : "rgb(250,250,250)", shadowColor: "gray" },
+        tabBarStyle: { backgroundColor: isDarkMode === "dark" ? "rgb(6,6,6)" : "rgb(250,250,250)", shadowColor: "gray" },
         tabBarActiveTintColor: isDarkMode === "dark" ? "white" : "black",
       }}
     >

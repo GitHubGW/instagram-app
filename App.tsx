@@ -5,7 +5,7 @@ import Ionicons from "@expo/vector-icons/Ionicons";
 import * as Font from "expo-font";
 import { Asset } from "expo-asset";
 import { NavigationContainer } from "@react-navigation/native";
-import { Appearance, StatusBar } from "react-native";
+import { Appearance, ColorSchemeName, StatusBar } from "react-native";
 import { darkTheme, lightTheme } from "./styles/themes";
 import { ThemeProvider } from "styled-components/native";
 import { ApolloProvider, useReactiveVar } from "@apollo/client";
@@ -21,11 +21,15 @@ const App = () => {
   const isDarkMode: "light" | "dark" = useReactiveVar(isDarkModeVar);
 
   const startAsync = async (): Promise<void> => {
+    const colorSchemeName: ColorSchemeName = Appearance.getColorScheme();
+    isDarkModeVar(colorSchemeName === "light" ? "light" : "dark");
+
     const token: string | null = await AsyncStorage.getItem("token");
     if (token) {
       isLoggedInVar(true);
       tokenVar(token);
     }
+
     await persistCache({ cache, storage: new AsyncStorageWrapper(AsyncStorage) });
 
     const ioniconsFontArray: { [key: string]: any }[] = [Ionicons.font];

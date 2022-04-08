@@ -37,7 +37,7 @@ const StackNavigation = ({ screenName }: StackNavigationProps) => {
         presentation: "transparentModal",
         headerBackTitleVisible: false,
         headerTintColor: isDarkMode === "dark" ? "white" : "black",
-        headerStyle: { backgroundColor: isDarkMode === "dark" ? "rgb(4,4,4)" : "rgb(250,250,250)", shadowColor: "gray" },
+        headerStyle: { backgroundColor: isDarkMode === "dark" ? "rgb(6,6,6)" : "rgb(250,250,250)", shadowColor: "gray" },
       }}
     >
       {screenName === "StackFeed" ? (
@@ -48,7 +48,7 @@ const StackNavigation = ({ screenName }: StackNavigationProps) => {
             headerTitle: () => (
               <LogoContainer>
                 {isDarkMode === "dark" ? (
-                  <LogoImage source={require("../assets/instagram_logo_light.png")} resizeMode="contain"></LogoImage>
+                  <LogoImage source={require("../assets/instagram_logo_dark.png")} resizeMode="contain"></LogoImage>
                 ) : (
                   <LogoImage source={require("../assets/instagram_logo_light.png")} resizeMode="contain"></LogoImage>
                 )}
