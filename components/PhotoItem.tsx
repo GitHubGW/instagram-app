@@ -10,7 +10,7 @@ import { isDarkModeVar } from "../apollo";
 
 type PhotoItemNavigationProps = NativeStackNavigationProp<RootStackParamList>;
 
-interface PhotoItem {
+interface PhotoItemProps {
   id: number;
   caption: string;
   isLiked: boolean;
@@ -107,7 +107,7 @@ const InfoContainer = styled.View`
   width: 100%;
 `;
 
-const PhotoItem = ({ id, caption, isLiked, isMe, photoUrl, totalComments, totalLikes, user }: PhotoItem) => {
+const PhotoItem = ({ id, caption, isLiked, isMe, photoUrl, totalComments, totalLikes, user }: PhotoItemProps) => {
   const isDarkMode: "light" | "dark" = useReactiveVar(isDarkModeVar);
   const { width, height }: ScaledSize = useWindowDimensions();
   const navigation = useNavigation<PhotoItemNavigationProps>();

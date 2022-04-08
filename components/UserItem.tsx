@@ -1,9 +1,22 @@
+import { ApolloCache } from "@apollo/client";
 import { useNavigation } from "@react-navigation/native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import styled from "styled-components/native";
+import { useFollowUserMutation, useUnfollowUserMutation } from "../generated/graphql";
+import useLoggedInUser from "../hooks/useLoggedInUser";
 import { RootStackParamList } from "../shared/shared.types";
+import Loading from "./Loading";
 
 type UserItemNavigationProps = NativeStackNavigationProp<RootStackParamList>;
+
+interface UserItemProps {
+  id: number;
+  username: string;
+  name: string;
+  avatarUrl: string;
+  isFollowing: boolean;
+  isMe: boolean;
+}
 
 const Container = styled.View`
   flex-direction: row;
@@ -54,11 +67,69 @@ const FollowButtonText = styled.Text`
   color: white;
 `;
 
-const UserItem = ({ id, username, name, avatarUrl, isFollowing, isMe }: any) => {
+const UserItem = ({ id, username, name, avatarUrl, isFollowing, isMe }: UserItemProps) => {
+  let followUsername: string | undefined;
+  let unfollowUsername: string | undefined;
+  const loggedInUser = useLoggedInUser();
   const navigation = useNavigation<UserItemNavigationProps>();
+  const [followUserMutation, { loading: followUserLoading }] = useFollowUserMutation({
+    update: (cache: ApolloCache<any>, { data }) => {
+      if (data?.followUser.ok === false) {
+        return;
+      }
+
+      followUsername = data?.followUser.user?.username;
+      cache.modify({
+        id: `User:${data?.followUser.user?.id}`,
+        fields: {
+          isFollowing: (isFollowing: boolean) => true,
+          totalFollowers: (totalFollowers: number) => totalFollowers + 1,
+        },
+      });
+      cache.modify({
+        id: `User:${loggedInUser?.id}`,
+        fields: {
+          totalFollowing: (totalFollowing: number) => totalFollowing + 1,
+        },
+      });
+    },
+  });
+  const [unfollowUserMutation, { loading: unfollowUserLoading }] = useUnfollowUserMutation({
+    update: (cache: ApolloCache<any>, { data }) => {
+      if (data?.unfollowUser.ok === false) {
+        return;
+      }
+
+      unfollowUsername = data?.unfollowUser.user?.username;
+      cache.modify({
+        id: `User:${data?.unfollowUser.user?.id}`,
+        fields: {
+          isFollowing: (isFollowing: boolean) => false,
+          totalFollowers: (totalFollowers: number) => totalFollowers - 1,
+        },
+      });
+      cache.modify({
+        id: `User:${loggedInUser?.id}`,
+        fields: {
+          totalFollowing: (totalFollowing: number) => totalFollowing - 1,
+        },
+      });
+    },
+  });
 
   const handleNavigateToProfileScreen = (): void => {
     navigation.navigate("StackProfile", { id, username, name, avatarUrl, isFollowing, isMe });
+  };
+
+  const handleToggleFollow = (isFollowing: boolean, username: string): void => {
+    if (followUserLoading === true || unfollowUserLoading === true) {
+      return;
+    }
+    if (isFollowing === false) {
+      followUserMutation({ variables: { username } });
+    } else if (isFollowing === true) {
+      unfollowUserMutation({ variables: { username } });
+    }
   };
 
   return (
@@ -71,8 +142,8 @@ const UserItem = ({ id, username, name, avatarUrl, isFollowing, isMe }: any) => 
         </UserInfoContainer>
       </UserContainer>
       {!isMe && (
-        <FollowButton>
-          <FollowButtonText>{isFollowing ? "팔로우 취소" : "팔로우"}</FollowButtonText>
+        <FollowButton onPress={() => handleToggleFollow(isFollowing, username)}>
+          <FollowButtonText>{followUserLoading === true || unfollowUserLoading === true ? <Loading /> : isFollowing ? "팔로우 취소" : "팔로우"}</FollowButtonText>
         </FollowButton>
       )}
     </Container>
