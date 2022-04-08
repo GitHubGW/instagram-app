@@ -26,11 +26,11 @@ const Container = styled.View`
   flex: 1;
   justify-content: center;
   align-items: center;
-  margin-bottom: 30px;
+  margin-bottom: 20px;
 `;
 
 const Header = styled.TouchableOpacity`
-  padding: 5px 10px;
+  padding: 17px 10px;
   flex-direction: row;
   align-items: center;
   width: 100%;
@@ -64,7 +64,7 @@ const Name = styled.Text`
 
 const PhotoImage = styled.Image<{ width: number; height: number }>`
   width: ${(props) => props.width}px;
-  height: ${(props) => props.height / 2}px;
+  height: ${(props) => props.height / 1.7}px;
 `;
 
 const CaptionContainer = styled.View`
@@ -128,7 +128,7 @@ const PhotoItem = ({ id, caption, isLiked, isMe, photoUrl, totalComments, totalL
   });
 
   const handleNavigateToProfileScreen = (): void => {
-    navigation.navigate("StackProfile");
+    navigation.navigate("StackProfile", { id: user.id, username: user.username, name: user.name, avatarUrl: user.avatarUrl, isFollowing: user.isFollowing, isMe: user.isMe });
   };
 
   const handleNavigateToCommentsScreen = (): void => {
