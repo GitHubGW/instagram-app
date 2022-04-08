@@ -11,8 +11,9 @@ import { ThemeProvider } from "styled-components/native";
 import { ApolloProvider, useReactiveVar } from "@apollo/client";
 import LoggedInNavigation from "./navigators/LoggedInNavigation";
 import LoggedOutNavigation from "./navigators/LoggedOutNavigation";
-import client, { isLoggedInVar, tokenVar } from "./apollo";
+import client, { isLoggedInVar, tokenVar, cache } from "./apollo";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { AsyncStorageWrapper, persistCache } from "apollo3-cache-persist";
 
 const App = () => {
   const [currentTheme, setCurrentTheme] = useState<"light" | "dark">("light");
@@ -25,6 +26,7 @@ const App = () => {
       isLoggedInVar(true);
       tokenVar(token);
     }
+    await persistCache({ cache, storage: new AsyncStorageWrapper(AsyncStorage) });
 
     const ioniconsFontArray: { [key: string]: any }[] = [Ionicons.font];
     const loadedIoniconsFont: Promise<void>[] = ioniconsFontArray.map((ioniconsFont: { [key: string]: any }) => Font.loadAsync(ioniconsFont));
