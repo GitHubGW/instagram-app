@@ -5,9 +5,10 @@ import { User, useToggleLikePhotoMutation } from "../generated/graphql";
 import { useNavigation } from "@react-navigation/core";
 import { RootStackParamList } from "../shared/shared.types";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
-import { ApolloCache } from "@apollo/client";
+import { ApolloCache, useReactiveVar } from "@apollo/client";
+import { isDarkModeVar } from "../apollo";
 
-type PhotoItemNavigationProps = NativeStackNavigationProp<RootStackParamList, "StackPhoto">;
+type PhotoItemNavigationProps = NativeStackNavigationProp<RootStackParamList>;
 
 interface PhotoItem {
   id: number;
@@ -21,7 +22,7 @@ interface PhotoItem {
 }
 
 const Container = styled.View`
-  background-color: black;
+  background-color: ${(props) => props.theme.bgColor};
   flex: 1;
   justify-content: center;
   align-items: center;
@@ -29,7 +30,7 @@ const Container = styled.View`
 `;
 
 const Header = styled.TouchableOpacity`
-  padding: 20px 10px;
+  padding: 5px 10px;
   flex-direction: row;
   align-items: center;
   width: 100%;
@@ -42,10 +43,23 @@ const Avatar = styled.Image`
   margin-right: 10px;
 `;
 
+const UserInfoContainer = styled.View`
+  display: flex;
+  flex-direction: column;
+`;
+
 const Username = styled.Text`
-  color: white;
   font-weight: bold;
   margin-right: 10px;
+  font-size: 15px;
+  color: ${(props) => props.theme.textColor};
+  margin-bottom: 2px;
+`;
+
+const Name = styled.Text`
+  font-weight: bold;
+  color: gray;
+  font-size: 14px;
 `;
 
 const PhotoImage = styled.Image<{ width: number; height: number }>`
@@ -62,6 +76,7 @@ const CaptionContainer = styled.View`
 const CaptionText = styled.Text`
   color: white;
   font-size: 16px;
+  color: ${(props) => props.theme.textColor};
 `;
 
 const SectionContainer = styled.View`
@@ -83,6 +98,7 @@ const TotalLikes = styled.Text`
   font-weight: bold;
   margin: 8px 0;
   margin-right: 18px;
+  color: ${(props) => props.theme.textColor};
 `;
 
 const InfoContainer = styled.View`
@@ -92,6 +108,7 @@ const InfoContainer = styled.View`
 `;
 
 const PhotoItem = ({ id, caption, isLiked, isMe, photoUrl, totalComments, totalLikes, user }: PhotoItem) => {
+  const isDarkMode: "light" | "dark" = useReactiveVar(isDarkModeVar);
   const { width, height }: ScaledSize = useWindowDimensions();
   const navigation = useNavigation<PhotoItemNavigationProps>();
   const [toggleLikePhotoMutation, { loading: toggleLikePhotoLoading }] = useToggleLikePhotoMutation({
@@ -110,8 +127,16 @@ const PhotoItem = ({ id, caption, isLiked, isMe, photoUrl, totalComments, totalL
     },
   });
 
-  const handleNavigateToScreen = (screenName: string): void => {
-    navigation.navigate(screenName);
+  const handleNavigateToProfileScreen = (): void => {
+    navigation.navigate("StackProfile");
+  };
+
+  const handleNavigateToCommentsScreen = (): void => {
+    navigation.navigate("StackComments");
+  };
+
+  const handleNavigateToLikesScreen = (): void => {
+    navigation.navigate("StackLikes", { photoId: id });
   };
 
   const handleToggleLikePhoto = (): void => {
@@ -120,14 +145,17 @@ const PhotoItem = ({ id, caption, isLiked, isMe, photoUrl, totalComments, totalL
 
   return (
     <Container>
-      <Header onPress={() => handleNavigateToScreen("StackProfile")}>
+      <Header onPress={handleNavigateToProfileScreen}>
         {user.avatarUrl ? <Avatar source={{ uri: user.avatarUrl }}></Avatar> : <Avatar source={require("../assets/basic_user.jpeg")}></Avatar>}
-        <Username>{user.username}</Username>
+        <UserInfoContainer>
+          <Username>{user.username}</Username>
+          <Name>{user.name}</Name>
+        </UserInfoContainer>
       </Header>
       <PhotoImage source={{ uri: photoUrl }} width={width} height={height}></PhotoImage>
       {caption ? (
         <CaptionContainer>
-          <TouchableOpacity onPress={() => handleNavigateToScreen("StackProfile")}>
+          <TouchableOpacity onPress={handleNavigateToProfileScreen}>
             <Username>{user.username}</Username>
           </TouchableOpacity>
           <CaptionText>{caption}</CaptionText>
@@ -136,21 +164,21 @@ const PhotoItem = ({ id, caption, isLiked, isMe, photoUrl, totalComments, totalL
       <SectionContainer>
         <IconsContainer>
           <Icon onPress={handleToggleLikePhoto}>
-            <Ionicons name={isLiked ? "heart" : "heart-outline"} color={isLiked ? "rgb(237, 73, 86)" : "white"} size={32}></Ionicons>
+            <Ionicons name={isLiked ? "heart" : "heart-outline"} color={isLiked ? "rgb(237, 73, 86)" : isDarkMode === "dark" ? "white" : "black"} size={32}></Ionicons>
           </Icon>
-          <Icon onPress={() => handleNavigateToScreen("StackComments")}>
-            <Ionicons name="chatbubble-outline" color="white" size={30}></Ionicons>
+          <Icon onPress={handleNavigateToCommentsScreen}>
+            <Ionicons name="chatbubble-outline" color={isDarkMode === "dark" ? "white" : "black"} size={30}></Ionicons>
           </Icon>
           <Icon>
-            <Ionicons name="paper-plane-outline" color="white" size={30}></Ionicons>
+            <Ionicons name="paper-plane-outline" color={isDarkMode === "dark" ? "white" : "black"} size={30}></Ionicons>
           </Icon>
         </IconsContainer>
       </SectionContainer>
       <InfoContainer>
-        <TouchableOpacity onPress={() => handleNavigateToScreen("StackLikes")}>
+        <TouchableOpacity onPress={handleNavigateToLikesScreen}>
           <TotalLikes>좋아요 {totalLikes}개</TotalLikes>
         </TouchableOpacity>
-        <TouchableOpacity onPress={() => handleNavigateToScreen("StackComments")}>
+        <TouchableOpacity onPress={handleNavigateToCommentsScreen}>
           <TotalLikes>댓글 {totalComments}개</TotalLikes>
         </TouchableOpacity>
       </InfoContainer>

@@ -9,6 +9,8 @@ import Profile from "../screens/Profile";
 import Search from "../screens/Search";
 import Likes from "../screens/Likes";
 import Comments from "../screens/Comments";
+import { useReactiveVar } from "@apollo/client";
+import { isDarkModeVar } from "../apollo";
 
 interface StackNavigationProps {
   screenName: string;
@@ -27,13 +29,15 @@ const LogoImage = styled.Image`
 `;
 
 const StackNavigation = ({ screenName }: StackNavigationProps) => {
+  const isDarkMode: "light" | "dark" = useReactiveVar(isDarkModeVar);
+
   return (
     <Stack.Navigator
       screenOptions={{
         presentation: "transparentModal",
         headerBackTitleVisible: false,
-        headerTintColor: "white",
-        headerStyle: { backgroundColor: "black", shadowColor: "white" },
+        headerTintColor: isDarkMode === "dark" ? "white" : "black",
+        headerStyle: { backgroundColor: isDarkMode === "dark" ? "rgb(4,4,4)" : "rgb(250,250,250)", shadowColor: "gray" },
       }}
     >
       {screenName === "StackFeed" ? (
@@ -43,7 +47,11 @@ const StackNavigation = ({ screenName }: StackNavigationProps) => {
           options={{
             headerTitle: () => (
               <LogoContainer>
-                <LogoImage source={require("../assets/instagram_logo.png")} resizeMode="contain"></LogoImage>
+                {isDarkMode === "dark" ? (
+                  <LogoImage source={require("../assets/instagram_logo_light.png")} resizeMode="contain"></LogoImage>
+                ) : (
+                  <LogoImage source={require("../assets/instagram_logo_light.png")} resizeMode="contain"></LogoImage>
+                )}
               </LogoContainer>
             ),
           }}

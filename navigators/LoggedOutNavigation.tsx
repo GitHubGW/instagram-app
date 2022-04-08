@@ -1,4 +1,6 @@
+import { useReactiveVar } from "@apollo/client";
 import { createStackNavigator } from "@react-navigation/stack";
+import { isDarkModeVar } from "../apollo";
 import Enter from "../screens/Enter";
 import Login from "../screens/Login";
 import SignUp from "../screens/SignUp";
@@ -6,6 +8,8 @@ import SignUp from "../screens/SignUp";
 const Stack = createStackNavigator();
 
 const LoggedOutNav = () => {
+  const isDarkMode: "light" | "dark" = useReactiveVar(isDarkModeVar);
+
   return (
     <Stack.Navigator
       screenOptions={{
@@ -14,7 +18,7 @@ const LoggedOutNav = () => {
         headerMode: "screen",
         headerTransparent: true,
         headerBackTitleVisible: false,
-        headerTintColor: "white",
+        headerTintColor: isDarkMode === "dark" ? "white" : "black",
       }}
     >
       <Stack.Screen name="StackEnter" component={Enter}></Stack.Screen>

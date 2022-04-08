@@ -1,5 +1,7 @@
+import { useReactiveVar } from "@apollo/client";
 import { Keyboard, KeyboardAvoidingView, Platform, TouchableWithoutFeedback } from "react-native";
 import styled from "styled-components/native";
+import { isDarkModeVar } from "../apollo";
 
 interface AuthLayoutProps {
   children: React.ReactNode;
@@ -7,7 +9,7 @@ interface AuthLayoutProps {
 
 const TouchableWithoutFeedbackContainer = styled(TouchableWithoutFeedback)`
   flex: 1;
-  background-color: black;
+  background-color: ${(props) => props.theme.bgColor};
 `;
 
 const KeyboardAvoidingViewContainer = styled(KeyboardAvoidingView)`
@@ -19,7 +21,6 @@ const Container = styled.View`
   justify-content: center;
   align-items: center;
   background-color: ${(props) => props.theme.bgColor};
-  background-color: black;
 `;
 
 const LogoContainer = styled.View`
@@ -34,6 +35,8 @@ const LogoImage = styled.Image`
 `;
 
 const AuthLayout = ({ children }: AuthLayoutProps) => {
+  const isDarkMode: "light" | "dark" = useReactiveVar(isDarkModeVar);
+
   const handleHideKeyboard = (): void => {
     Keyboard.dismiss();
   };
@@ -42,7 +45,11 @@ const AuthLayout = ({ children }: AuthLayoutProps) => {
     <TouchableWithoutFeedbackContainer onPress={handleHideKeyboard} disabled={Platform.OS === "web"}>
       <Container>
         <LogoContainer>
-          <LogoImage source={require("../assets/instagram_logo.png")} resizeMode="contain"></LogoImage>
+          {isDarkMode === "dark" ? (
+            <LogoImage source={require("../assets/instagram_logo_dark.png")} resizeMode="contain"></LogoImage>
+          ) : (
+            <LogoImage source={require("../assets/instagram_logo_light.png")} resizeMode="contain"></LogoImage>
+          )}
         </LogoContainer>
         <KeyboardAvoidingViewContainer behavior={Platform.OS === "ios" ? "padding" : "height"} keyboardVerticalOffset={Platform.OS === "ios" ? 50 : -50}>
           {children}

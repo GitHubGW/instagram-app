@@ -100,6 +100,7 @@ const SignUp = ({ navigation }: SignUpNavigationProps) => {
               value={value}
               onChangeText={onChange}
               onSubmitEditing={() => onFocusNext(passwordRef)}
+              ref={usernameRef}
               keyboardType="email-address"
               autoCapitalize="none"
               autoCorrect={false}

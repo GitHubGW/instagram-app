@@ -2,17 +2,21 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { Ionicons } from "@expo/vector-icons";
 import Search from "../screens/Search";
 import StackNavigation from "./StackNavigation";
+import { useReactiveVar } from "@apollo/client";
+import { isDarkModeVar } from "../apollo";
 
 const Tab = createBottomTabNavigator();
 
 const LoggedInNav = () => {
+  const isDarkMode: "light" | "dark" = useReactiveVar(isDarkModeVar);
+
   return (
     <Tab.Navigator
       screenOptions={{
         headerShown: false,
         tabBarShowLabel: false,
-        tabBarStyle: { backgroundColor: "black", borderTopColor: "#444" },
-        tabBarActiveTintColor: "white",
+        tabBarStyle: { backgroundColor: isDarkMode === "dark" ? "rgb(4,4,4)" : "rgb(250,250,250)", shadowColor: "gray" },
+        tabBarActiveTintColor: isDarkMode === "dark" ? "white" : "black",
       }}
     >
       <Tab.Screen

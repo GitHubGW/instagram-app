@@ -2,14 +2,14 @@ import { DefaultTheme } from "styled-components";
 
 export const lightTheme: DefaultTheme = {
   textColor: "black",
-  bgColor: "#FAFAFA",
+  bgColor: "white",
   bgContainerColor: "white",
   headerColor: "#FFFFFF",
   activeColor: "#0095F6",
   inactiveColor: "#B2DFFC",
   textBoldColor: "#979797",
   borderColor: "#DBDBDB",
-  inputBgColor: "#fafafa",
+  inputBgColor: "#F0F0F0",
   searchBgColor: "#efefef",
   hashtagColor: "#00376b",
   grayTextColor: "#8F8F8F",
@@ -21,14 +21,14 @@ export const lightTheme: DefaultTheme = {
 
 export const darkTheme: DefaultTheme = {
   textColor: "white",
-  bgColor: "rgb(8,8,8)",
+  bgColor: "black",
   bgContainerColor: "black",
   headerColor: "rgb(14,14,14)",
   activeColor: "#0095F6",
   inactiveColor: "#B2DFFC",
   textBoldColor: "#979797",
   borderColor: "rgb(60,60,60)",
-  inputBgColor: "black",
+  inputBgColor: "#202020",
   searchBgColor: "black",
   hashtagColor: "#00376b",
   grayTextColor: "#8F8F8F",
