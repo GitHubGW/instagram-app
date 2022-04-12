@@ -31,7 +31,6 @@ const App = () => {
     }
 
     await persistCache({ cache, storage: new AsyncStorageWrapper(AsyncStorage) });
-
     const ioniconsFontArray: { [key: string]: any }[] = [Ionicons.font];
     const loadedIoniconsFont: Promise<void>[] = ioniconsFontArray.map((ioniconsFont: { [key: string]: any }) => Font.loadAsync(ioniconsFont));
     const imageArray: string[] = [

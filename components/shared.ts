@@ -8,3 +8,11 @@ export const Input = styled.TextInput`
   padding-left: 7px;
   border-radius: 3px;
 `;
+
+export const Separator = styled.View`
+  width: 100%;
+  height: 0.5px;
+  background-color: lightgray;
+  margin: 20px 0;
+  margin-bottom: 0;
+`;

@@ -1,5 +1,5 @@
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { FlatList } from "react-native";
 import styled from "styled-components/native";
 import Loading from "../components/Loading";
@@ -20,19 +20,9 @@ const FlatListContainer = styled(FlatList)`
   width: 100%;
 `;
 
-const Likes = ({ route }: LikesNavigationProps) => {
-  const {
-    params: { photoId },
-  } = route;
+const Likes = ({ navigation, route }: LikesNavigationProps) => {
   const [refreshing, setRefreshing] = useState<boolean>(false);
-  const {
-    data: seePhotoLikesData,
-    loading: seePhotoLikesLoading,
-    refetch,
-  } = useSeePhotoLikesQuery({
-    variables: { photoId },
-    skip: !photoId,
-  });
+  const { data: seePhotoLikesData, loading: seePhotoLikesLoading, refetch } = useSeePhotoLikesQuery({ variables: { photoId: route.params.photoId }, skip: !route.params.photoId });
 
   const onEndReached = (): void => {
     console.log("onEndReached", onEndReached);
@@ -44,9 +34,13 @@ const Likes = ({ route }: LikesNavigationProps) => {
     setRefreshing(false);
   };
 
-  const renderItem = ({ item }: any) => {
-    return <UserItem {...item} />;
+  const renderItem = ({ item: user }: any) => {
+    return <UserItem {...user} />;
   };
+
+  useEffect(() => {
+    navigation.setOptions({ headerTitle: "좋아요" });
+  }, []);
 
   return (
     <Container>

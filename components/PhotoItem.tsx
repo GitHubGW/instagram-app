@@ -7,30 +7,31 @@ import { RootStackParamList } from "../shared/shared.types";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { ApolloCache, useReactiveVar } from "@apollo/client";
 import { isDarkModeVar } from "../apollo";
+import CreatedAt from "./CreatedAt";
 
 type PhotoItemNavigationProps = NativeStackNavigationProp<RootStackParamList>;
 
 interface PhotoItemProps {
-  id: number;
-  caption: string;
-  isLiked: boolean;
-  isMe: boolean;
-  photoUrl: string;
-  totalComments: number;
-  totalLikes: number;
-  user: User;
+  id?: number | null;
+  caption?: string | null;
+  isLiked?: boolean | null;
+  isMe?: boolean | null;
+  photoUrl?: string | null;
+  totalComments?: number | null;
+  totalLikes?: number | null;
+  user?: User | null;
 }
 
 const Container = styled.View`
   background-color: ${(props) => props.theme.bgColor};
   flex: 1;
   justify-content: center;
-  align-items: center;
   margin-bottom: 20px;
+  width: 100%;
 `;
 
 const Header = styled.TouchableOpacity`
-  padding: 17px 10px;
+  padding: 12px 10px;
   flex-direction: row;
   align-items: center;
   width: 100%;
@@ -67,9 +68,13 @@ const PhotoImage = styled.Image<{ width: number; height: number }>`
   height: ${(props) => props.height / 1.7}px;
 `;
 
+const PhotoContent = styled.View`
+  padding: 10px;
+`;
+
 const CaptionContainer = styled.View`
   flex-direction: row;
-  padding: 10px 10px;
+  padding-right: 50px;
   width: 100%;
 `;
 
@@ -77,16 +82,18 @@ const CaptionText = styled.Text`
   color: white;
   font-size: 16px;
   color: ${(props) => props.theme.textColor};
+  line-height: 22px;
 `;
 
 const SectionContainer = styled.View`
-  padding: 10px 10px;
   width: 100%;
 `;
 
 const IconsContainer = styled.View`
   flex-direction: row;
   align-items: center;
+  padding-top: 10px;
+  padding-bottom: 3px;
 `;
 
 const Icon = styled.TouchableOpacity`
@@ -103,11 +110,12 @@ const TotalLikes = styled.Text`
 
 const InfoContainer = styled.View`
   flex-direction: row;
-  padding-left: 10px;
   width: 100%;
 `;
 
-const PhotoItem = ({ id, caption, isLiked, isMe, photoUrl, totalComments, totalLikes, user }: PhotoItemProps) => {
+const CreatedAtContainer = styled.View``;
+
+const PhotoItem = ({ id, caption, isLiked, isMe, photoUrl, totalComments, totalLikes, user, createdAt }: any) => {
   const isDarkMode: "light" | "dark" = useReactiveVar(isDarkModeVar);
   const { width, height }: ScaledSize = useWindowDimensions();
   const navigation = useNavigation<PhotoItemNavigationProps>();
@@ -128,60 +136,65 @@ const PhotoItem = ({ id, caption, isLiked, isMe, photoUrl, totalComments, totalL
   });
 
   const handleNavigateToProfileScreen = (): void => {
-    navigation.navigate("StackProfile", { id: user.id, username: user.username, name: user.name, avatarUrl: user.avatarUrl, isFollowing: user.isFollowing, isMe: user.isMe });
+    navigation.navigate("StackProfile", { id: user?.id, username: user?.username, name: user?.name, avatarUrl: user?.avatarUrl, isFollowing: user?.isFollowing, isMe: user?.isMe });
   };
 
   const handleNavigateToCommentsScreen = (): void => {
-    navigation.navigate("StackComments");
+    navigation.navigate("StackComments", { photoId: id as number, caption, createdAt, user });
   };
 
   const handleNavigateToLikesScreen = (): void => {
-    navigation.navigate("StackLikes", { photoId: id });
+    navigation.navigate("StackLikes", { photoId: id as number });
   };
 
   const handleToggleLikePhoto = (): void => {
-    toggleLikePhotoMutation({ variables: { photoId: id } });
+    toggleLikePhotoMutation({ variables: { photoId: id as number } });
   };
 
   return (
     <Container>
       <Header onPress={handleNavigateToProfileScreen}>
-        {user.avatarUrl ? <Avatar source={{ uri: user.avatarUrl }}></Avatar> : <Avatar source={require("../assets/basic_user.jpeg")}></Avatar>}
+        {user?.avatarUrl ? <Avatar source={{ uri: user?.avatarUrl }}></Avatar> : <Avatar source={require("../assets/basic_user.jpeg")}></Avatar>}
         <UserInfoContainer>
-          <Username>{user.username}</Username>
-          <Name>{user.name}</Name>
+          <Username>{user?.username}</Username>
+          <Name>{user?.name}</Name>
         </UserInfoContainer>
       </Header>
       <PhotoImage source={{ uri: photoUrl }} width={width} height={height}></PhotoImage>
-      {caption ? (
-        <CaptionContainer>
-          <TouchableOpacity onPress={handleNavigateToProfileScreen}>
-            <Username>{user.username}</Username>
+      <PhotoContent>
+        {caption ? (
+          <CaptionContainer>
+            <TouchableOpacity onPress={handleNavigateToProfileScreen}>
+              <Username>{user?.username}</Username>
+            </TouchableOpacity>
+            <CaptionText>{caption}</CaptionText>
+          </CaptionContainer>
+        ) : null}
+        <SectionContainer>
+          <IconsContainer>
+            <Icon onPress={handleToggleLikePhoto}>
+              <Ionicons name={isLiked ? "heart" : "heart-outline"} color={isLiked ? "rgb(237, 73, 86)" : isDarkMode === "dark" ? "white" : "black"} size={32}></Ionicons>
+            </Icon>
+            <Icon onPress={handleNavigateToCommentsScreen}>
+              <Ionicons name="chatbubble-outline" color={isDarkMode === "dark" ? "white" : "black"} size={30}></Ionicons>
+            </Icon>
+            <Icon>
+              <Ionicons name="paper-plane-outline" color={isDarkMode === "dark" ? "white" : "black"} size={30}></Ionicons>
+            </Icon>
+          </IconsContainer>
+        </SectionContainer>
+        <InfoContainer>
+          <TouchableOpacity onPress={handleNavigateToLikesScreen}>
+            <TotalLikes>좋아요 {totalLikes}개</TotalLikes>
           </TouchableOpacity>
-          <CaptionText>{caption}</CaptionText>
-        </CaptionContainer>
-      ) : null}
-      <SectionContainer>
-        <IconsContainer>
-          <Icon onPress={handleToggleLikePhoto}>
-            <Ionicons name={isLiked ? "heart" : "heart-outline"} color={isLiked ? "rgb(237, 73, 86)" : isDarkMode === "dark" ? "white" : "black"} size={32}></Ionicons>
-          </Icon>
-          <Icon onPress={handleNavigateToCommentsScreen}>
-            <Ionicons name="chatbubble-outline" color={isDarkMode === "dark" ? "white" : "black"} size={30}></Ionicons>
-          </Icon>
-          <Icon>
-            <Ionicons name="paper-plane-outline" color={isDarkMode === "dark" ? "white" : "black"} size={30}></Ionicons>
-          </Icon>
-        </IconsContainer>
-      </SectionContainer>
-      <InfoContainer>
-        <TouchableOpacity onPress={handleNavigateToLikesScreen}>
-          <TotalLikes>좋아요 {totalLikes}개</TotalLikes>
-        </TouchableOpacity>
-        <TouchableOpacity onPress={handleNavigateToCommentsScreen}>
-          <TotalLikes>댓글 {totalComments}개</TotalLikes>
-        </TouchableOpacity>
-      </InfoContainer>
+          <TouchableOpacity onPress={handleNavigateToCommentsScreen}>
+            <TotalLikes>댓글 {totalComments}개</TotalLikes>
+          </TouchableOpacity>
+        </InfoContainer>
+        <CreatedAtContainer>
+          <CreatedAt createdAt={createdAt} />
+        </CreatedAtContainer>
+      </PhotoContent>
     </Container>
   );
 };
