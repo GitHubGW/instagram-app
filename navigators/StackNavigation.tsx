@@ -1,5 +1,4 @@
 import { createStackNavigator } from "@react-navigation/stack";
-import { Dimensions } from "react-native";
 import styled from "styled-components/native";
 import Feed from "../screens/Feed";
 import Notification from "../screens/Notification";
@@ -17,7 +16,6 @@ interface StackNavigationProps {
 }
 
 const Stack = createStackNavigator();
-const windowWidth: number = Dimensions.get("screen").width;
 
 const LogoContainer = styled.View`
   height: 100px;
