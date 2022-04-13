@@ -5,9 +5,20 @@ import { isDarkModeVar } from "../apollo";
 import SelectPhoto from "../screens/SelectPhoto";
 import TakePhoto from "../screens/TakePhoto";
 import Ionicons from "@expo/vector-icons/Ionicons";
+import styled from "styled-components/native";
 
 const Tab = createMaterialTopTabNavigator();
 const Stack = createStackNavigator();
+
+const HeaderRightContainer = styled.TouchableOpacity`
+  padding-right: 10px;
+`;
+
+const HeaderRightText = styled.Text`
+  font-size: 16px;
+  color: ${(props) => props.theme.activeColor};
+  font-weight: bold;
+`;
 
 const PhotoNavigation = () => {
   const isDarkMode: "light" | "dark" = useReactiveVar(isDarkModeVar);
@@ -29,6 +40,13 @@ const PhotoNavigation = () => {
               headerStyle: { backgroundColor: isDarkMode === "light" ? "white" : "black" },
               headerTintColor: isDarkMode === "light" ? "black" : "white",
               headerBackImage: ({ tintColor }) => <Ionicons name="close" color={tintColor} size={32} />,
+              headerRight: ({ tintColor, pressColor, pressOpacity, canGoBack }) => {
+                return (
+                  <HeaderRightContainer>
+                    <HeaderRightText>다음</HeaderRightText>
+                  </HeaderRightContainer>
+                );
+              },
             }}
           >
             <Stack.Screen options={{ title: "사진" }} name="StackSelectPhoto" component={SelectPhoto} />
