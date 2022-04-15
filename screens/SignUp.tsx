@@ -68,6 +68,7 @@ const SignUp = ({ navigation }: SignUpNavigationProps) => {
               placeholder="이메일"
               placeholderTextColor="gray"
               blurOnSubmit={false}
+              maxLength={20}
             ></Input>
           )}
         ></Controller>
@@ -88,6 +89,7 @@ const SignUp = ({ navigation }: SignUpNavigationProps) => {
               placeholder="이름"
               placeholderTextColor="gray"
               blurOnSubmit={false}
+              maxLength={20}
             ></Input>
           )}
         ></Controller>
@@ -108,6 +110,7 @@ const SignUp = ({ navigation }: SignUpNavigationProps) => {
               placeholder="유저명"
               placeholderTextColor="gray"
               blurOnSubmit={false}
+              maxLength={20}
             ></Input>
           )}
         ></Controller>
@@ -125,6 +128,7 @@ const SignUp = ({ navigation }: SignUpNavigationProps) => {
               secureTextEntry={true}
               placeholder="비밀번호"
               placeholderTextColor="gray"
+              maxLength={30}
             ></Input>
           )}
         ></Controller>

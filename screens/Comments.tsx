@@ -12,6 +12,14 @@ import { TouchableOpacity } from "react-native-gesture-handler";
 
 type CommentsNavigationProps = NativeStackScreenProps<RootStackParamList, "StackComments">;
 
+const LoadingContainer = styled.View`
+  background-color: ${(props) => props.theme.bgColor};
+  flex: 1;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+`;
+
 const Container = styled.View`
   background-color: ${(props) => props.theme.bgColor};
   flex: 1;
@@ -85,11 +93,13 @@ const Comments = ({ navigation, route }: CommentsNavigationProps) => {
   }, []);
 
   return (
-    <Container>
+    <>
       {seeCommentsLoading === true ? (
-        <Loading />
+        <LoadingContainer>
+          <Loading />
+        </LoadingContainer>
       ) : (
-        <>
+        <Container>
           <PhotoContainer>
             <TouchableOpacity onPress={handleNavigateToProfileScreen}>
               <Avatar source={{ uri: route.params.user.avatarUrl || "" }}></Avatar>
@@ -113,9 +123,9 @@ const Comments = ({ navigation, route }: CommentsNavigationProps) => {
             renderItem={renderItem}
             keyExtractor={(comment: any) => String(comment.id)}
           ></FlatListContainer>
-        </>
+        </Container>
       )}
-    </Container>
+    </>
   );
 };
 

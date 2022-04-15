@@ -65,7 +65,7 @@ const Name = styled.Text`
 
 const PhotoImage = styled.Image<{ width: number; height: number }>`
   width: ${(props) => props.width}px;
-  height: ${(props) => props.height / 1.7}px;
+  height: ${(props) => props.height / 1.8}px;
 `;
 
 const PhotoContent = styled.View`

@@ -46,7 +46,6 @@ const SearchingText = styled.Text`
 
 const FlatListContainer = styled(FlatList)`
   width: 100%;
-  margin-top: 5px;
 `;
 
 const PhotoImage = styled.Image<{ width: number }>`

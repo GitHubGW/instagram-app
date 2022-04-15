@@ -8,6 +8,11 @@ import { useEffect } from "react";
 
 type PhotoNavigationProps = NativeStackScreenProps<RootStackParamList, "StackPhoto">;
 
+const LoadingContainer = styled.View`
+  flex: 1;
+  justify-content: center;
+`;
+
 const Container = styled.View`
   flex: 1;
 `;
@@ -19,7 +24,15 @@ const Photo = ({ navigation, route }: PhotoNavigationProps) => {
     navigation.setOptions({ headerTitle: "게시물" });
   }, []);
 
-  return <Container>{seePhotoLoading === true ? <Loading /> : <PhotoItem {...seePhotoData?.seePhoto.photo} />}</Container>;
+  return seePhotoLoading === true ? (
+    <LoadingContainer>
+      <Loading />
+    </LoadingContainer>
+  ) : (
+    <Container>
+      <PhotoItem {...seePhotoData?.seePhoto.photo} />
+    </Container>
+  );
 };
 
 export default Photo;

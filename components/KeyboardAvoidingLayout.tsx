@@ -1,11 +1,11 @@
-import { Keyboard, KeyboardAvoidingView, Platform, TouchableWithoutFeedback } from "react-native";
+import { Keyboard, KeyboardAvoidingView, Platform } from "react-native";
 import styled from "styled-components/native";
 
 interface KeyboardAvoidingLayoutProps {
   children: React.ReactNode;
 }
 
-const TouchableWithoutFeedbackContainer = styled(TouchableWithoutFeedback)`
+const TouchableWithoutFeedbackContainer = styled.TouchableWithoutFeedback`
   flex: 1;
   background-color: ${(props) => props.theme.bgColor};
 `;

@@ -69,6 +69,7 @@ const Login = ({ route }: LoginNavigationProps) => {
               placeholder="유저명"
               placeholderTextColor="gray"
               blurOnSubmit={false}
+              maxLength={20}
             ></Input>
           )}
         ></Controller>
@@ -86,6 +87,7 @@ const Login = ({ route }: LoginNavigationProps) => {
               secureTextEntry={true}
               placeholder="비밀번호"
               placeholderTextColor="gray"
+              maxLength={30}
             ></Input>
           )}
         ></Controller>
