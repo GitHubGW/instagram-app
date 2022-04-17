@@ -8,5 +8,8 @@ export type RootStackParamList = {
   StackProfile: any;
   StackLikes: { photoId: number };
   StackComments: { photoId: number; caption: string; createdAt: number; user: User };
+  StackTabNavigation: undefined;
+  StackPhotoNavigation: undefined;
+  StackUploadPhotoNavigation: any;
   [key: string]: any;
 };

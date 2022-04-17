@@ -536,17 +536,63 @@ export type UnfollowUserMutationVariables = Exact<{
 
 export type UnfollowUserMutation = { __typename?: 'Mutation', unfollowUser: { __typename?: 'UnfollowUserResult', ok: boolean, message: string, user?: { __typename?: 'User', id: number, name?: string | null, username: string } | null } };
 
+export type UploadPhotoMutationVariables = Exact<{
+  photo: Scalars['Upload'];
+  caption?: InputMaybe<Scalars['String']>;
+}>;
+
+
+export type UploadPhotoMutation = { __typename?: 'Mutation', uploadPhoto: { __typename?: 'UploadPhotoResult', ok: boolean, message: string, photo?: { __typename?: 'Photo', id: number, photoUrl: string, caption?: string | null, totalLikes: number, totalComments: number, isMe: boolean, isLiked: boolean, createdAt: string, user: { __typename?: 'User', id: number, name?: string | null, username: string, avatarUrl?: string | null }, hashtags?: Array<{ __typename?: 'Hashtag', id: number, name: string } | null> | null } | null } };
+
+export type SearchHashtagsQueryVariables = Exact<{
+  name: Scalars['String'];
+}>;
+
+
+export type SearchHashtagsQuery = { __typename?: 'Query', searchHashtags: { __typename?: 'SearchHashtagsResult', ok: boolean, message: string, hashtags?: Array<{ __typename?: 'Hashtag', id: number, name: string, totalPhotos?: number | null } | null> | null } };
+
+export type SearchPhotosQueryVariables = Exact<{
+  keyword: Scalars['String'];
+  cursor?: InputMaybe<Scalars['Int']>;
+}>;
+
+
+export type SearchPhotosQuery = { __typename?: 'Query', searchPhotos: { __typename?: 'SearchPhotosResult', ok: boolean, message: string, photos?: Array<{ __typename?: 'Photo', id: number, photoUrl: string, totalLikes: number, totalComments: number, user: { __typename?: 'User', id: number, username: string } } | null> | null } };
+
+export type SearchUsersQueryVariables = Exact<{
+  username: Scalars['String'];
+  cursor?: InputMaybe<Scalars['String']>;
+}>;
+
+
+export type SearchUsersQuery = { __typename?: 'Query', searchUsers: { __typename?: 'SearchUsersResult', ok: boolean, message: string, users?: Array<{ __typename?: 'User', id: number, name?: string | null, username: string, avatarUrl?: string | null } | null> | null } };
+
+export type SeeCommentsQueryVariables = Exact<{
+  photoId: Scalars['Int'];
+  cursor?: InputMaybe<Scalars['Int']>;
+}>;
+
+
+export type SeeCommentsQuery = { __typename?: 'Query', seeComments: { __typename?: 'SeeCommentsResult', ok: boolean, message: string, comments?: Array<{ __typename?: 'Comment', id: number, text: string, isMe: boolean, createdAt: string, user: { __typename?: 'User', id: number, username: string, name?: string | null, avatarUrl?: string | null, isMe: boolean, isFollowing: boolean } } | null> | null } };
+
 export type SeeFeedQueryVariables = Exact<{
   cursor?: InputMaybe<Scalars['Int']>;
 }>;
 
 
-export type SeeFeedQuery = { __typename?: 'Query', seeFeed: { __typename?: 'SeeFeedResult', ok: boolean, message: string, lastPhotoId?: number | null, photos?: Array<{ __typename?: 'Photo', id: number, photoUrl: string, caption?: string | null, totalLikes: number, totalComments: number, isMe: boolean, isLiked: boolean, createdAt: string, user: { __typename?: 'User', id: number, name?: string | null, username: string, avatarUrl?: string | null }, hashtags?: Array<{ __typename?: 'Hashtag', id: number, name: string } | null> | null, comments?: Array<{ __typename?: 'Comment', id: number, text: string, isMe: boolean, createdAt: string, user: { __typename?: 'User', id: number, username: string, avatarUrl?: string | null } } | null> | null } | null> | null } };
+export type SeeFeedQuery = { __typename?: 'Query', seeFeed: { __typename?: 'SeeFeedResult', ok: boolean, message: string, lastPhotoId?: number | null, photos?: Array<{ __typename?: 'Photo', id: number, photoUrl: string, caption?: string | null, totalLikes: number, totalComments: number, isMe: boolean, isLiked: boolean, createdAt: string, user: { __typename?: 'User', id: number, name?: string | null, username: string, avatarUrl?: string | null, isFollowing: boolean, isMe: boolean }, hashtags?: Array<{ __typename?: 'Hashtag', id: number, name: string } | null> | null, comments?: Array<{ __typename?: 'Comment', id: number, text: string, isMe: boolean, createdAt: string, user: { __typename?: 'User', id: number, username: string, avatarUrl?: string | null } } | null> | null } | null> | null } };
 
 export type SeeMeQueryVariables = Exact<{ [key: string]: never; }>;
 
 
 export type SeeMeQuery = { __typename?: 'Query', seeMe: { __typename?: 'seeMeResult', ok: boolean, message: string, user?: { __typename?: 'User', id: number, name?: string | null, username: string, email: string, avatarUrl?: string | null, bio?: string | null, isMe: boolean } | null } };
+
+export type SeePhotoQueryVariables = Exact<{
+  photoId: Scalars['Int'];
+}>;
+
+
+export type SeePhotoQuery = { __typename?: 'Query', seePhoto: { __typename?: 'SeePhotoResult', ok: boolean, message: string, photo?: { __typename?: 'Photo', id: number, photoUrl: string, caption?: string | null, totalLikes: number, totalComments: number, isMe: boolean, isLiked: boolean, createdAt: string, user: { __typename?: 'User', id: number, name?: string | null, username: string, avatarUrl?: string | null, isFollowing: boolean, isMe: boolean } } | null } };
 
 export type SeePhotoLikesQueryVariables = Exact<{
   photoId: Scalars['Int'];
@@ -555,6 +601,14 @@ export type SeePhotoLikesQueryVariables = Exact<{
 
 
 export type SeePhotoLikesQuery = { __typename?: 'Query', seePhotoLikes: { __typename?: 'SeePhotoLikesResult', ok: boolean, message: string, users?: Array<{ __typename?: 'User', id: number, name?: string | null, username: string, avatarUrl?: string | null, isFollowing: boolean, isMe: boolean } | null> | null } };
+
+export type SeeProfileQueryVariables = Exact<{
+  username: Scalars['String'];
+  cursor?: InputMaybe<Scalars['Int']>;
+}>;
+
+
+export type SeeProfileQuery = { __typename?: 'Query', seeProfile: { __typename?: 'SeeProfileResult', ok: boolean, message: string, user?: { __typename?: 'User', id: number, name?: string | null, username: string, bio?: string | null, avatarUrl?: string | null, totalFollowing: number, totalFollowers: number, totalPhotos: number, isFollowing: boolean, isMe: boolean, photos?: Array<{ __typename?: 'Photo', id: number, photoUrl: string, isLiked: boolean, totalLikes: number, totalComments: number, caption?: string | null, createdAt: string, user: { __typename?: 'User', id: number, name?: string | null, username: string, avatarUrl?: string | null } } | null> | null, following?: Array<{ __typename?: 'User', id: number, name?: string | null, username: string, avatarUrl?: string | null, isFollowing: boolean } | null> | null, followers?: Array<{ __typename?: 'User', id: number, name?: string | null, username: string, avatarUrl?: string | null, isFollowing: boolean } | null> | null } | null } };
 
 
 export const CreateAccountDocument = gql`
@@ -747,6 +801,243 @@ export function useUnfollowUserMutation(baseOptions?: Apollo.MutationHookOptions
 export type UnfollowUserMutationHookResult = ReturnType<typeof useUnfollowUserMutation>;
 export type UnfollowUserMutationResult = Apollo.MutationResult<UnfollowUserMutation>;
 export type UnfollowUserMutationOptions = Apollo.BaseMutationOptions<UnfollowUserMutation, UnfollowUserMutationVariables>;
+export const UploadPhotoDocument = gql`
+    mutation UploadPhoto($photo: Upload!, $caption: String) {
+  uploadPhoto(photo: $photo, caption: $caption) {
+    ok
+    message
+    photo {
+      id
+      user {
+        id
+        name
+        username
+        avatarUrl
+      }
+      photoUrl
+      caption
+      hashtags {
+        id
+        name
+      }
+      totalLikes
+      totalComments
+      isMe
+      isLiked
+      createdAt
+    }
+  }
+}
+    `;
+export type UploadPhotoMutationFn = Apollo.MutationFunction<UploadPhotoMutation, UploadPhotoMutationVariables>;
+
+/**
+ * __useUploadPhotoMutation__
+ *
+ * To run a mutation, you first call `useUploadPhotoMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useUploadPhotoMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [uploadPhotoMutation, { data, loading, error }] = useUploadPhotoMutation({
+ *   variables: {
+ *      photo: // value for 'photo'
+ *      caption: // value for 'caption'
+ *   },
+ * });
+ */
+export function useUploadPhotoMutation(baseOptions?: Apollo.MutationHookOptions<UploadPhotoMutation, UploadPhotoMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<UploadPhotoMutation, UploadPhotoMutationVariables>(UploadPhotoDocument, options);
+      }
+export type UploadPhotoMutationHookResult = ReturnType<typeof useUploadPhotoMutation>;
+export type UploadPhotoMutationResult = Apollo.MutationResult<UploadPhotoMutation>;
+export type UploadPhotoMutationOptions = Apollo.BaseMutationOptions<UploadPhotoMutation, UploadPhotoMutationVariables>;
+export const SearchHashtagsDocument = gql`
+    query SearchHashtags($name: String!) {
+  searchHashtags(name: $name) {
+    ok
+    message
+    hashtags {
+      id
+      name
+      totalPhotos
+    }
+  }
+}
+    `;
+
+/**
+ * __useSearchHashtagsQuery__
+ *
+ * To run a query within a React component, call `useSearchHashtagsQuery` and pass it any options that fit your needs.
+ * When your component renders, `useSearchHashtagsQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useSearchHashtagsQuery({
+ *   variables: {
+ *      name: // value for 'name'
+ *   },
+ * });
+ */
+export function useSearchHashtagsQuery(baseOptions: Apollo.QueryHookOptions<SearchHashtagsQuery, SearchHashtagsQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<SearchHashtagsQuery, SearchHashtagsQueryVariables>(SearchHashtagsDocument, options);
+      }
+export function useSearchHashtagsLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<SearchHashtagsQuery, SearchHashtagsQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<SearchHashtagsQuery, SearchHashtagsQueryVariables>(SearchHashtagsDocument, options);
+        }
+export type SearchHashtagsQueryHookResult = ReturnType<typeof useSearchHashtagsQuery>;
+export type SearchHashtagsLazyQueryHookResult = ReturnType<typeof useSearchHashtagsLazyQuery>;
+export type SearchHashtagsQueryResult = Apollo.QueryResult<SearchHashtagsQuery, SearchHashtagsQueryVariables>;
+export const SearchPhotosDocument = gql`
+    query SearchPhotos($keyword: String!, $cursor: Int) {
+  searchPhotos(keyword: $keyword, cursor: $cursor) {
+    ok
+    message
+    photos {
+      id
+      photoUrl
+      user {
+        id
+        username
+      }
+      totalLikes
+      totalComments
+    }
+  }
+}
+    `;
+
+/**
+ * __useSearchPhotosQuery__
+ *
+ * To run a query within a React component, call `useSearchPhotosQuery` and pass it any options that fit your needs.
+ * When your component renders, `useSearchPhotosQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useSearchPhotosQuery({
+ *   variables: {
+ *      keyword: // value for 'keyword'
+ *      cursor: // value for 'cursor'
+ *   },
+ * });
+ */
+export function useSearchPhotosQuery(baseOptions: Apollo.QueryHookOptions<SearchPhotosQuery, SearchPhotosQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<SearchPhotosQuery, SearchPhotosQueryVariables>(SearchPhotosDocument, options);
+      }
+export function useSearchPhotosLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<SearchPhotosQuery, SearchPhotosQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<SearchPhotosQuery, SearchPhotosQueryVariables>(SearchPhotosDocument, options);
+        }
+export type SearchPhotosQueryHookResult = ReturnType<typeof useSearchPhotosQuery>;
+export type SearchPhotosLazyQueryHookResult = ReturnType<typeof useSearchPhotosLazyQuery>;
+export type SearchPhotosQueryResult = Apollo.QueryResult<SearchPhotosQuery, SearchPhotosQueryVariables>;
+export const SearchUsersDocument = gql`
+    query SearchUsers($username: String!, $cursor: String) {
+  searchUsers(username: $username, cursor: $cursor) {
+    ok
+    message
+    users {
+      id
+      name
+      username
+      avatarUrl
+    }
+  }
+}
+    `;
+
+/**
+ * __useSearchUsersQuery__
+ *
+ * To run a query within a React component, call `useSearchUsersQuery` and pass it any options that fit your needs.
+ * When your component renders, `useSearchUsersQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useSearchUsersQuery({
+ *   variables: {
+ *      username: // value for 'username'
+ *      cursor: // value for 'cursor'
+ *   },
+ * });
+ */
+export function useSearchUsersQuery(baseOptions: Apollo.QueryHookOptions<SearchUsersQuery, SearchUsersQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<SearchUsersQuery, SearchUsersQueryVariables>(SearchUsersDocument, options);
+      }
+export function useSearchUsersLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<SearchUsersQuery, SearchUsersQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<SearchUsersQuery, SearchUsersQueryVariables>(SearchUsersDocument, options);
+        }
+export type SearchUsersQueryHookResult = ReturnType<typeof useSearchUsersQuery>;
+export type SearchUsersLazyQueryHookResult = ReturnType<typeof useSearchUsersLazyQuery>;
+export type SearchUsersQueryResult = Apollo.QueryResult<SearchUsersQuery, SearchUsersQueryVariables>;
+export const SeeCommentsDocument = gql`
+    query SeeComments($photoId: Int!, $cursor: Int) {
+  seeComments(photoId: $photoId, cursor: $cursor) {
+    ok
+    message
+    comments {
+      id
+      text
+      user {
+        id
+        username
+        name
+        avatarUrl
+        isMe
+        isFollowing
+      }
+      isMe
+      createdAt
+    }
+  }
+}
+    `;
+
+/**
+ * __useSeeCommentsQuery__
+ *
+ * To run a query within a React component, call `useSeeCommentsQuery` and pass it any options that fit your needs.
+ * When your component renders, `useSeeCommentsQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useSeeCommentsQuery({
+ *   variables: {
+ *      photoId: // value for 'photoId'
+ *      cursor: // value for 'cursor'
+ *   },
+ * });
+ */
+export function useSeeCommentsQuery(baseOptions: Apollo.QueryHookOptions<SeeCommentsQuery, SeeCommentsQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<SeeCommentsQuery, SeeCommentsQueryVariables>(SeeCommentsDocument, options);
+      }
+export function useSeeCommentsLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<SeeCommentsQuery, SeeCommentsQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<SeeCommentsQuery, SeeCommentsQueryVariables>(SeeCommentsDocument, options);
+        }
+export type SeeCommentsQueryHookResult = ReturnType<typeof useSeeCommentsQuery>;
+export type SeeCommentsLazyQueryHookResult = ReturnType<typeof useSeeCommentsLazyQuery>;
+export type SeeCommentsQueryResult = Apollo.QueryResult<SeeCommentsQuery, SeeCommentsQueryVariables>;
 export const SeeFeedDocument = gql`
     query SeeFeed($cursor: Int) {
   seeFeed(cursor: $cursor) {
@@ -767,6 +1058,8 @@ export const SeeFeedDocument = gql`
         name
         username
         avatarUrl
+        isFollowing
+        isMe
       }
       hashtags {
         id
@@ -859,6 +1152,60 @@ export function useSeeMeLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<SeeM
 export type SeeMeQueryHookResult = ReturnType<typeof useSeeMeQuery>;
 export type SeeMeLazyQueryHookResult = ReturnType<typeof useSeeMeLazyQuery>;
 export type SeeMeQueryResult = Apollo.QueryResult<SeeMeQuery, SeeMeQueryVariables>;
+export const SeePhotoDocument = gql`
+    query SeePhoto($photoId: Int!) {
+  seePhoto(photoId: $photoId) {
+    ok
+    message
+    photo {
+      id
+      user {
+        id
+        name
+        username
+        avatarUrl
+        isFollowing
+        isMe
+      }
+      photoUrl
+      caption
+      totalLikes
+      totalComments
+      isMe
+      isLiked
+      createdAt
+    }
+  }
+}
+    `;
+
+/**
+ * __useSeePhotoQuery__
+ *
+ * To run a query within a React component, call `useSeePhotoQuery` and pass it any options that fit your needs.
+ * When your component renders, `useSeePhotoQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useSeePhotoQuery({
+ *   variables: {
+ *      photoId: // value for 'photoId'
+ *   },
+ * });
+ */
+export function useSeePhotoQuery(baseOptions: Apollo.QueryHookOptions<SeePhotoQuery, SeePhotoQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<SeePhotoQuery, SeePhotoQueryVariables>(SeePhotoDocument, options);
+      }
+export function useSeePhotoLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<SeePhotoQuery, SeePhotoQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<SeePhotoQuery, SeePhotoQueryVariables>(SeePhotoDocument, options);
+        }
+export type SeePhotoQueryHookResult = ReturnType<typeof useSeePhotoQuery>;
+export type SeePhotoLazyQueryHookResult = ReturnType<typeof useSeePhotoLazyQuery>;
+export type SeePhotoQueryResult = Apollo.QueryResult<SeePhotoQuery, SeePhotoQueryVariables>;
 export const SeePhotoLikesDocument = gql`
     query SeePhotoLikes($photoId: Int!, $cursor: String) {
   seePhotoLikes(photoId: $photoId, cursor: $cursor) {
@@ -904,3 +1251,81 @@ export function useSeePhotoLikesLazyQuery(baseOptions?: Apollo.LazyQueryHookOpti
 export type SeePhotoLikesQueryHookResult = ReturnType<typeof useSeePhotoLikesQuery>;
 export type SeePhotoLikesLazyQueryHookResult = ReturnType<typeof useSeePhotoLikesLazyQuery>;
 export type SeePhotoLikesQueryResult = Apollo.QueryResult<SeePhotoLikesQuery, SeePhotoLikesQueryVariables>;
+export const SeeProfileDocument = gql`
+    query SeeProfile($username: String!, $cursor: Int) {
+  seeProfile(username: $username) {
+    ok
+    message
+    user {
+      id
+      name
+      username
+      bio
+      avatarUrl
+      totalFollowing
+      totalFollowers
+      totalPhotos
+      isFollowing
+      isMe
+      photos(cursor: $cursor) {
+        id
+        user {
+          id
+          name
+          username
+          avatarUrl
+        }
+        photoUrl
+        isLiked
+        totalLikes
+        totalComments
+        caption
+        createdAt
+      }
+      following {
+        id
+        name
+        username
+        avatarUrl
+        isFollowing
+      }
+      followers {
+        id
+        name
+        username
+        avatarUrl
+        isFollowing
+      }
+    }
+  }
+}
+    `;
+
+/**
+ * __useSeeProfileQuery__
+ *
+ * To run a query within a React component, call `useSeeProfileQuery` and pass it any options that fit your needs.
+ * When your component renders, `useSeeProfileQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useSeeProfileQuery({
+ *   variables: {
+ *      username: // value for 'username'
+ *      cursor: // value for 'cursor'
+ *   },
+ * });
+ */
+export function useSeeProfileQuery(baseOptions: Apollo.QueryHookOptions<SeeProfileQuery, SeeProfileQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<SeeProfileQuery, SeeProfileQueryVariables>(SeeProfileDocument, options);
+      }
+export function useSeeProfileLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<SeeProfileQuery, SeeProfileQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<SeeProfileQuery, SeeProfileQueryVariables>(SeeProfileDocument, options);
+        }
+export type SeeProfileQueryHookResult = ReturnType<typeof useSeeProfileQuery>;
+export type SeeProfileLazyQueryHookResult = ReturnType<typeof useSeeProfileLazyQuery>;
+export type SeeProfileQueryResult = Apollo.QueryResult<SeeProfileQuery, SeeProfileQueryVariables>;

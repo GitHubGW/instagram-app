@@ -1,10 +1,13 @@
-import { useEffect, useState } from "react";
-import styled from "styled-components/native";
 import * as MediaLibrary from "expo-media-library";
+import styled from "styled-components/native";
+import Ionicons from "@expo/vector-icons/Ionicons";
+import { useEffect, useState } from "react";
 import { FlatList, ScaledSize, useWindowDimensions } from "react-native";
 import { TouchableOpacity } from "react-native-gesture-handler";
-import Ionicons from "@expo/vector-icons/Ionicons";
-import { useNavigation } from "@react-navigation/core";
+import { RootStackParamList } from "../shared/shared.types";
+import { NativeStackScreenProps } from "@react-navigation/native-stack";
+
+type PhotoNavigationProps = NativeStackScreenProps<RootStackParamList, "StackPhotoNavigation">;
 
 const Container = styled.View`
   flex: 1;
@@ -41,13 +44,22 @@ const AssetPhotoItemIcon = styled(Ionicons)`
   right: 3px;
 `;
 
-const SelectPhoto = () => {
-  const navigation = useNavigation();
+const HeaderRightContainer = styled.TouchableOpacity`
+  padding: 10px 12px;
+`;
+
+const HeaderRightText = styled.Text`
+  font-size: 17px;
+  color: ${(props) => props.theme.activeColor};
+  font-weight: bold;
+`;
+
+const SelectPhoto = ({ navigation }: PhotoNavigationProps) => {
   const { width }: ScaledSize = useWindowDimensions();
   const [canAccessPhotoGallery, setCanAccessPhotoGallery] = useState<boolean>(false);
   const [assetPhotos, setAssetPhotos] = useState<MediaLibrary.Asset[]>([]);
   const [totalPhotos, setTotalPhotos] = useState<number>(0);
-  const [chosenPhotoUri, setChosenPhotoUri] = useState<string>("");
+  const [chosenPhotoUri, setChosenPhotoUri] = useState<string | undefined>("");
 
   const handleGetPhotosFromGallery = async (): Promise<void> => {
     if (canAccessPhotoGallery === false) {
@@ -72,13 +84,18 @@ const SelectPhoto = () => {
     }
   };
 
-  const handleChoosePhoto = (assetPhotoUri: string): void => {
-    setChosenPhotoUri(assetPhotoUri);
+  const handleChoosePhoto = async (assetPhotoId: string): Promise<void> => {
+    const assetInfo: MediaLibrary.AssetInfo = await MediaLibrary.getAssetInfoAsync(assetPhotoId);
+    setChosenPhotoUri(assetInfo.localUri);
+  };
+
+  const handleNavigateToUploadPhotoScreen = (chosenPhotoUri: string | undefined): void => {
+    navigation.navigate("StackUploadPhotoNavigation", { photoUri: chosenPhotoUri });
   };
 
   const renderItem = ({ item: assetPhoto }: any) => {
     return (
-      <TouchableOpacity onPress={() => handleChoosePhoto(assetPhoto.uri)}>
+      <TouchableOpacity onPress={() => handleChoosePhoto(assetPhoto.id)}>
         <AssetPhotoItem width={width} source={{ uri: assetPhoto.uri }} />
         {assetPhoto.uri === chosenPhotoUri && <AssetPhotoItemIcon name="checkbox" size={16} color="white" />}
       </TouchableOpacity>
@@ -86,8 +103,17 @@ const SelectPhoto = () => {
   };
 
   useEffect(() => {
-    navigation.setOptions({ headerTitle: `사진 (${totalPhotos})` });
-  }, [totalPhotos]);
+    navigation.setOptions({
+      headerTitle: `사진 (${totalPhotos})`,
+      headerRight: () => {
+        return (
+          <HeaderRightContainer onPress={() => handleNavigateToUploadPhotoScreen(chosenPhotoUri)}>
+            <HeaderRightText>다음</HeaderRightText>
+          </HeaderRightContainer>
+        );
+      },
+    });
+  }, [totalPhotos, chosenPhotoUri]);
 
   useEffect(() => {
     handleGetPhotoGalleryPermission();
