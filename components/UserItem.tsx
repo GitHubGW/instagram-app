@@ -118,7 +118,14 @@ const UserItem = ({ id, username, name, avatarUrl, isFollowing, isMe }: UserItem
   });
 
   const handleNavigateToProfileScreen = (): void => {
-    navigation.navigate("StackProfile", { id, username, name, avatarUrl, isFollowing, isMe });
+    navigation.navigate("StackProfile", {
+      id,
+      username,
+      name,
+      avatarUrl,
+      isFollowing,
+      isMe,
+    });
   };
 
   const handleToggleFollow = (isFollowing: boolean, username: string): void => {

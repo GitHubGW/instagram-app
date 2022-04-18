@@ -135,8 +135,19 @@ const PhotoItem = ({ id, caption, isLiked, isMe, photoUrl, totalComments, totalL
     },
   });
 
+  const handleNavigateToStackRoomsNavigation = (): void => {
+    navigation.navigate("StackRoomsNavigation");
+  };
+
   const handleNavigateToProfileScreen = (): void => {
-    navigation.navigate("StackProfile", { id: user?.id, username: user?.username, name: user?.name, avatarUrl: user?.avatarUrl, isFollowing: user?.isFollowing, isMe: user?.isMe });
+    navigation.navigate("StackProfile", {
+      id: user?.id,
+      username: user?.username,
+      name: user?.name,
+      avatarUrl: user?.avatarUrl,
+      isFollowing: user?.isFollowing,
+      isMe: user?.isMe,
+    });
   };
 
   const handleNavigateToCommentsScreen = (): void => {
@@ -178,7 +189,7 @@ const PhotoItem = ({ id, caption, isLiked, isMe, photoUrl, totalComments, totalL
             <Icon onPress={handleNavigateToCommentsScreen}>
               <Ionicons name="chatbubble-outline" color={isDarkMode === "dark" ? "white" : "black"} size={30}></Ionicons>
             </Icon>
-            <Icon>
+            <Icon onPress={handleNavigateToStackRoomsNavigation}>
               <Ionicons name="paper-plane-outline" color={isDarkMode === "dark" ? "white" : "black"} size={30}></Ionicons>
             </Icon>
           </IconsContainer>

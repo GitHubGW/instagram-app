@@ -58,7 +58,14 @@ const CommentItem = ({ text, createdAt, user }: CommentItemProps) => {
   const navigation = useNavigation<CommentItemNavigationProps>();
 
   const handleNavigateToProfileScreen = (): void => {
-    navigation.navigate("StackProfile", { id: user?.id, username: user?.username, name: user?.name, avatarUrl: user?.avatarUrl, isFollowing: user?.isFollowing, isMe: user?.isMe });
+    navigation.navigate("StackProfile", {
+      id: user?.id,
+      username: user?.username,
+      name: user?.name,
+      avatarUrl: user?.avatarUrl,
+      isFollowing: user?.isFollowing,
+      isMe: user?.isMe,
+    });
   };
 
   return (

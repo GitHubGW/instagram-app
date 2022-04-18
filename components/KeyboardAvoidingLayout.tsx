@@ -21,7 +21,7 @@ const KeyboardAvoidingLayout = ({ children }: KeyboardAvoidingLayoutProps) => {
 
   return (
     <TouchableWithoutFeedbackContainer onPress={handleHideKeyboard} disabled={Platform.OS === "web"}>
-      <KeyboardAvoidingViewContainer behavior={Platform.OS === "ios" ? "padding" : "height"} keyboardVerticalOffset={Platform.OS === "ios" ? 50 : -50}>
+      <KeyboardAvoidingViewContainer behavior={Platform.OS === "ios" ? "padding" : "height"} keyboardVerticalOffset={Platform.OS === "ios" ? 90 : -50}>
         {children}
       </KeyboardAvoidingViewContainer>
     </TouchableWithoutFeedbackContainer>
