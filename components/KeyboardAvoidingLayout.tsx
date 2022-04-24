@@ -5,13 +5,14 @@ interface KeyboardAvoidingLayoutProps {
   children: React.ReactNode;
 }
 
-const TouchableWithoutFeedbackContainer = styled.TouchableWithoutFeedback`
-  flex: 1;
-  background-color: ${(props) => props.theme.bgColor};
-`;
-
 const KeyboardAvoidingViewContainer = styled(KeyboardAvoidingView)`
   flex: 1;
+`;
+
+const TouchableWithoutFeedbackContainer = styled.TouchableWithoutFeedback`
+  /* flex: 1; */
+  border: 3px solid green;
+  background-color: ${(props) => props.theme.bgColor};
 `;
 
 const KeyboardAvoidingLayout = ({ children }: KeyboardAvoidingLayoutProps) => {
@@ -20,11 +21,9 @@ const KeyboardAvoidingLayout = ({ children }: KeyboardAvoidingLayoutProps) => {
   };
 
   return (
-    <TouchableWithoutFeedbackContainer onPress={handleHideKeyboard} disabled={Platform.OS === "web"}>
-      <KeyboardAvoidingViewContainer behavior={Platform.OS === "ios" ? "padding" : "height"} keyboardVerticalOffset={Platform.OS === "ios" ? 90 : -50}>
-        {children}
-      </KeyboardAvoidingViewContainer>
-    </TouchableWithoutFeedbackContainer>
+    <KeyboardAvoidingViewContainer behavior={Platform.OS === "ios" ? "padding" : "height"} keyboardVerticalOffset={Platform.OS === "ios" ? 90 : -50}>
+      {children}
+    </KeyboardAvoidingViewContainer>
   );
 };
 

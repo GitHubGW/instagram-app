@@ -66,7 +66,7 @@ const Login = ({ route }: LoginNavigationProps) => {
               autoCapitalize="none"
               autoCorrect={false}
               returnKeyType="done"
-              placeholder="유저명"
+              placeholder="유저 이름"
               placeholderTextColor="gray"
               blurOnSubmit={false}
               maxLength={20}

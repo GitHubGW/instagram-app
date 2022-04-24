@@ -5,7 +5,7 @@ import { isDarkModeVar } from "../apollo";
 const Loading = () => {
   const isDarkMode: "light" | "dark" = useReactiveVar(isDarkModeVar);
 
-  return <ActivityIndicator color={isDarkMode === "light" ? "black" : "white"}></ActivityIndicator>;
+  return <ActivityIndicator color={isDarkMode === "light" ? "black" : "white"} size={12}></ActivityIndicator>;
 };
 
 export default Loading;
