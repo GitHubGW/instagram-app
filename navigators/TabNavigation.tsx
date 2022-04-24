@@ -70,7 +70,7 @@ const TabNavigation = () => {
             ),
         }}
       >
-        {() => <StackNavigation screenName="StackMe"></StackNavigation>}
+        {() => <StackNavigation screenName="StackProfileNavigation"></StackNavigation>}
       </Tab.Screen>
     </Tab.Navigator>
   );

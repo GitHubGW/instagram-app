@@ -61,8 +61,8 @@ const OtherMessage = styled.Text`
 const MessageItem = ({ id, text, read, createdAt, user, otherUser }: MessageItemProps) => {
   const navigation = useNavigation<MessageItemNavigationProps>();
 
-  const handleNavigateToProfileScreen = (): void => {
-    navigation.navigate("StackProfile", {
+  const handleNavigateToProfileNavigation = (): void => {
+    navigation.navigate("StackProfileNavigation", {
       id: otherUser?.id,
       username: otherUser?.username,
       name: otherUser?.name,
@@ -78,7 +78,7 @@ const MessageItem = ({ id, text, read, createdAt, user, otherUser }: MessageItem
     </MyMessageContainer>
   ) : (
     <OtherMessageContainer>
-      <AuthorContainer onPress={handleNavigateToProfileScreen}>
+      <AuthorContainer onPress={handleNavigateToProfileNavigation}>
         <Avatar source={{ uri: user.avatarUrl }}></Avatar>
       </AuthorContainer>
       <OtherMessage>{text}</OtherMessage>

@@ -57,8 +57,8 @@ const CommentText = styled.Text`
 const CommentItem = ({ text, createdAt, user }: CommentItemProps) => {
   const navigation = useNavigation<CommentItemNavigationProps>();
 
-  const handleNavigateToProfileScreen = (): void => {
-    navigation.navigate("StackProfile", {
+  const handleNavigateToProfileNavigation = (): void => {
+    navigation.navigate("StackProfileNavigation", {
       id: user?.id,
       username: user?.username,
       name: user?.name,
@@ -70,12 +70,12 @@ const CommentItem = ({ text, createdAt, user }: CommentItemProps) => {
 
   return (
     <Container>
-      <TouchableOpacity onPress={handleNavigateToProfileScreen}>
+      <TouchableOpacity onPress={handleNavigateToProfileNavigation}>
         <Avatar source={{ uri: user.avatarUrl }}></Avatar>
       </TouchableOpacity>
       <CommentInfoContainer>
         <CommentUserContainer>
-          <TouchableOpacity onPress={handleNavigateToProfileScreen}>
+          <TouchableOpacity onPress={handleNavigateToProfileNavigation}>
             <CommentUsername>{user.username}</CommentUsername>
           </TouchableOpacity>
           <CommentText>{text}</CommentText>

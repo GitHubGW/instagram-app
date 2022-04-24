@@ -67,8 +67,8 @@ const Comments = ({ navigation, route }: CommentsNavigationProps) => {
   const [refreshing, setRefreshing] = useState<boolean>(false);
   const { data: seeCommentsData, loading: seeCommentsLoading, refetch } = useSeeCommentsQuery({ variables: { photoId: route.params.photoId } });
 
-  const handleNavigateToProfileScreen = (): void => {
-    navigation.navigate("StackProfile", {
+  const handleNavigateToProfileNavigation = (): void => {
+    navigation.navigate("StackProfileNavigation", {
       id: route.params.user?.id,
       username: route.params.user?.username,
       name: route.params.user?.name,
@@ -101,12 +101,12 @@ const Comments = ({ navigation, route }: CommentsNavigationProps) => {
       ) : (
         <Container>
           <PhotoContainer>
-            <TouchableOpacity onPress={handleNavigateToProfileScreen}>
+            <TouchableOpacity onPress={handleNavigateToProfileNavigation}>
               <Avatar source={{ uri: route.params.user.avatarUrl || "" }}></Avatar>
             </TouchableOpacity>
             <PhotoInfoContainer>
               <PhotoUserContainer>
-                <TouchableOpacity onPress={handleNavigateToProfileScreen}>
+                <TouchableOpacity onPress={handleNavigateToProfileNavigation}>
                   <PhotoUsername>{route.params.user.username}</PhotoUsername>
                 </TouchableOpacity>
                 <PhotoCaption>{route.params.caption.length > 40 ? `${route.params.caption.slice(0, 40)}...` : route.params.caption}</PhotoCaption>

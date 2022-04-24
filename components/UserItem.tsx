@@ -117,8 +117,8 @@ const UserItem = ({ id, username, name, avatarUrl, isFollowing, isMe }: UserItem
     },
   });
 
-  const handleNavigateToProfileScreen = (): void => {
-    navigation.navigate("StackProfile", {
+  const handleNavigateToProfileNavigation = (): void => {
+    navigation.navigate("StackProfileNavigation", {
       id,
       username,
       name,
@@ -141,7 +141,7 @@ const UserItem = ({ id, username, name, avatarUrl, isFollowing, isMe }: UserItem
 
   return (
     <Container>
-      <UserContainer onPress={handleNavigateToProfileScreen}>
+      <UserContainer onPress={handleNavigateToProfileNavigation}>
         <UserAvatar source={{ uri: avatarUrl }}></UserAvatar>
         <UserInfoContainer>
           <Username>{username}</Username>

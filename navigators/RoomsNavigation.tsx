@@ -3,7 +3,6 @@ import Room from "../screens/Room";
 import { createStackNavigator } from "@react-navigation/stack";
 import { useReactiveVar } from "@apollo/client";
 import { isDarkModeVar } from "../apollo";
-import { Ionicons } from "@expo/vector-icons";
 
 const Stack = createStackNavigator();
 

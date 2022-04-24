@@ -22,11 +22,9 @@ interface PhotoItemProps {
   user?: User | null;
 }
 
-const Container = styled.View`
+const Container = styled.ScrollView`
   background-color: ${(props) => props.theme.bgColor};
   flex: 1;
-  justify-content: center;
-  margin-bottom: 20px;
   width: 100%;
 `;
 
@@ -139,8 +137,8 @@ const PhotoItem = ({ id, caption, isLiked, isMe, photoUrl, totalComments, totalL
     navigation.navigate("StackRoomsNavigation");
   };
 
-  const handleNavigateToProfileScreen = (): void => {
-    navigation.navigate("StackProfile", {
+  const handleNavigateToProfileNavigation = (): void => {
+    navigation.navigate("StackProfileNavigation", {
       id: user?.id,
       username: user?.username,
       name: user?.name,
@@ -164,7 +162,7 @@ const PhotoItem = ({ id, caption, isLiked, isMe, photoUrl, totalComments, totalL
 
   return (
     <Container>
-      <Header onPress={handleNavigateToProfileScreen}>
+      <Header onPress={handleNavigateToProfileNavigation}>
         {user?.avatarUrl ? <Avatar source={{ uri: user?.avatarUrl }}></Avatar> : <Avatar source={require("../assets/basic_user.jpeg")}></Avatar>}
         <UserInfoContainer>
           <Username>{user?.username}</Username>
@@ -175,7 +173,7 @@ const PhotoItem = ({ id, caption, isLiked, isMe, photoUrl, totalComments, totalL
       <PhotoContent>
         {caption ? (
           <CaptionContainer>
-            <TouchableOpacity onPress={handleNavigateToProfileScreen}>
+            <TouchableOpacity onPress={handleNavigateToProfileNavigation}>
               <Username>{user?.username}</Username>
             </TouchableOpacity>
             <CaptionText>{caption}</CaptionText>

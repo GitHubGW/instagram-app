@@ -5,6 +5,7 @@ import { createStackNavigator } from "@react-navigation/stack";
 import { useReactiveVar } from "@apollo/client";
 import { isDarkModeVar } from "../apollo";
 import RoomsNavigation from "./RoomsNavigation";
+import ProfileNavigation from "./ProfileNavigation";
 
 const Stack = createStackNavigator();
 
@@ -26,6 +27,7 @@ const LoggedInNav = () => {
         }}
       />
       <Stack.Screen name="StackRoomsNavigation" component={RoomsNavigation} options={{ headerShown: false }} />
+      <Stack.Screen name="StackProfileNavigation" component={ProfileNavigation} />
     </Stack.Navigator>
   );
 };
