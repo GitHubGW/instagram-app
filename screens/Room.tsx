@@ -6,12 +6,12 @@ import styled from "styled-components/native";
 import KeyboardAvoidingLayout from "../components/KeyboardAvoidingLayout";
 import Loading from "../components/Loading";
 import MessageItem from "../components/MessageItem";
-import { useSeeRoomQuery, useSendMessageMutation } from "../generated/graphql";
+import { SeeRoomQuery, useMessageUpdatesSubscription, useSeeRoomQuery, useSendMessageMutation } from "../generated/graphql";
 import { RootStackParamList } from "../shared/shared.types";
 import Ionicons from "@expo/vector-icons/Ionicons";
-import { ApolloCache, Reference } from "@apollo/client";
+import { ApolloCache, ApolloClient, Reference, useApolloClient } from "@apollo/client";
 import gql from "graphql-tag";
-import useLoggedInUser from "../hooks/useLoggedInUser";
+import { MESSAGE_UPDATES_SUBSCRIPTION } from "../documents/subscriptions/messageUpdates.subscription";
 
 type RoomNavigationProps = NativeStackScreenProps<RootStackParamList, "StackRoom">;
 
@@ -72,44 +72,17 @@ const Username = styled.Text`
 `;
 
 const Room = ({ navigation, route }: RoomNavigationProps) => {
-  const loggedInUser = useLoggedInUser();
+  const client: ApolloClient<object> = useApolloClient();
   const [refreshing, setRefreshing] = useState<boolean>(false);
   const { control, handleSubmit, getValues, setValue, watch } = useForm<MessageFormData>({ defaultValues: { text: "" } });
-  const { data: seeRoomData, loading: seeRoomLoading, refetch } = useSeeRoomQuery({ variables: { roomId: route.params?.id } });
+  const { data: messageUpdatesData } = useMessageUpdatesSubscription({ variables: { roomId: route.params?.id } });
+  const { data: seeRoomData, loading: seeRoomLoading, refetch, subscribeToMore } = useSeeRoomQuery({ variables: { roomId: route.params?.id } });
   const [sendMessageMutation, { loading: sendMessageLoading }] = useSendMessageMutation({
     update: (cache: ApolloCache<any>, { data }) => {
       if (data?.sendMessage.ok === false) {
         return;
       }
-
-      const { text } = getValues();
       setValue("text", "");
-      const messageReference: Reference | undefined = cache.writeFragment({
-        fragment: gql`
-          fragment message on Message {
-            id
-            text
-            read
-            createdAt
-            user
-          }
-        `,
-        data: {
-          __typename: "Message",
-          id: data?.sendMessage.id,
-          text,
-          read: true,
-          createdAt: String(Date.now()),
-          user: { __ref: `User:${loggedInUser?.id}` },
-        },
-      });
-      cache.modify({
-        id: `Room:${route.params?.id}`,
-        fields: {
-          messages: (messages) => [...messages, messageReference],
-          latestMessage: (latestMessage) => messageReference,
-        },
-      });
     },
   });
 
@@ -130,6 +103,49 @@ const Room = ({ navigation, route }: RoomNavigationProps) => {
     const { text } = getValues();
     sendMessageMutation({ variables: { roomId: route.params?.id, text } });
   };
+
+  useEffect(() => {
+    if (seeRoomData?.seeRoom.ok === true) {
+      subscribeToMore({
+        document: MESSAGE_UPDATES_SUBSCRIPTION,
+        variables: { roomId: route.params?.id },
+        updateQuery: (prev: SeeRoomQuery, { subscriptionData }: any): any => {
+          if (subscriptionData.data.messageUpdates.id) {
+            const existingMessage = prev.seeRoom.room?.messages?.find((message) => message?.id === subscriptionData.data.messageUpdates.id);
+            if (existingMessage) {
+              return;
+            }
+
+            const messageReference: Reference | undefined = client.cache.writeFragment({
+              fragment: gql`
+                fragment message on Message {
+                  id
+                  text
+                  read
+                  createdAt
+                  user
+                }
+              `,
+              data: subscriptionData.data.messageUpdates,
+            });
+            client.cache.modify({
+              id: `Room:${route.params?.id}`,
+              fields: {
+                messages: (prev) => {
+                  const existingMessageReference = prev.find((prevMessages: any) => prevMessages.__ref === messageReference?.__ref);
+                  if (existingMessageReference) {
+                    return;
+                  }
+                  return [...prev, { __ref: `Message:${subscriptionData.data.messageUpdates.id}` }];
+                },
+                latestMessage: (latestMessage) => messageReference,
+              },
+            });
+          }
+        },
+      });
+    }
+  }, [seeRoomData]);
 
   useEffect(() => {
     navigation.setOptions({

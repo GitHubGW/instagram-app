@@ -633,6 +633,13 @@ export type SeeRoomsQueryVariables = Exact<{ [key: string]: never; }>;
 
 export type SeeRoomsQuery = { __typename?: 'Query', seeRooms: { __typename?: 'SeeRoomsResult', ok: boolean, message: string, rooms?: Array<{ __typename?: 'Room', id: number, totalUnreadMessages: number, createdAt: string, updatedAt: string, users?: Array<{ __typename?: 'User', id: number, name?: string | null, username: string, avatarUrl?: string | null, isFollowing: boolean, isMe: boolean } | null> | null, messages?: Array<{ __typename?: 'Message', id: number, text: string, createdAt: string } | null> | null, latestMessage?: { __typename?: 'Message', id: number, text: string, createdAt: string } | null } | null> | null } };
 
+export type MessageUpdatesSubscriptionVariables = Exact<{
+  roomId: Scalars['Int'];
+}>;
+
+
+export type MessageUpdatesSubscription = { __typename?: 'Subscription', messageUpdates?: { __typename?: 'Message', id: number, text: string, read: boolean, createdAt: string, user: { __typename?: 'User', id: number, username: string, avatarUrl?: string | null } } | null };
+
 
 export const CreateAccountDocument = gql`
     mutation CreateAccount($email: String!, $name: String, $username: String!, $password: String!) {
@@ -1510,3 +1517,41 @@ export function useSeeRoomsLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<S
 export type SeeRoomsQueryHookResult = ReturnType<typeof useSeeRoomsQuery>;
 export type SeeRoomsLazyQueryHookResult = ReturnType<typeof useSeeRoomsLazyQuery>;
 export type SeeRoomsQueryResult = Apollo.QueryResult<SeeRoomsQuery, SeeRoomsQueryVariables>;
+export const MessageUpdatesDocument = gql`
+    subscription MessageUpdates($roomId: Int!) {
+  messageUpdates(roomId: $roomId) {
+    id
+    text
+    read
+    user {
+      id
+      username
+      avatarUrl
+    }
+    createdAt
+  }
+}
+    `;
+
+/**
+ * __useMessageUpdatesSubscription__
+ *
+ * To run a query within a React component, call `useMessageUpdatesSubscription` and pass it any options that fit your needs.
+ * When your component renders, `useMessageUpdatesSubscription` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the subscription, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useMessageUpdatesSubscription({
+ *   variables: {
+ *      roomId: // value for 'roomId'
+ *   },
+ * });
+ */
+export function useMessageUpdatesSubscription(baseOptions: Apollo.SubscriptionHookOptions<MessageUpdatesSubscription, MessageUpdatesSubscriptionVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useSubscription<MessageUpdatesSubscription, MessageUpdatesSubscriptionVariables>(MessageUpdatesDocument, options);
+      }
+export type MessageUpdatesSubscriptionHookResult = ReturnType<typeof useMessageUpdatesSubscription>;
+export type MessageUpdatesSubscriptionResult = Apollo.SubscriptionResult<MessageUpdatesSubscription>;
