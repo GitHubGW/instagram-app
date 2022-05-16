@@ -1,5 +1,5 @@
 overwrite: true
-schema: "http://localhost:4000/graphql"
+schema: "https://instagram-gw.herokuapp.com/graphql"
 documents: "./documents/**/*.ts"
 generates:
   ./generated/graphql.ts:
