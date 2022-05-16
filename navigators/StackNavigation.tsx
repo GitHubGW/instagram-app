@@ -1,15 +1,15 @@
-import { createStackNavigator } from "@react-navigation/stack";
-import styled from "styled-components/native";
 import Feed from "../screens/Feed";
-import Notification from "../screens/Notification";
+import Likes from "../screens/Likes";
 import Photo from "../screens/Photo";
 import Search from "../screens/Search";
-import Likes from "../screens/Likes";
 import Comments from "../screens/Comments";
-import { useReactiveVar } from "@apollo/client";
-import { isDarkModeVar } from "../apollo";
+import styled from "styled-components/native";
+import Notification from "../screens/Notification";
 import ProfileNavigation from "./ProfileNavigation";
 import useLoggedInUser from "../hooks/useLoggedInUser";
+import { isDarkModeVar } from "../apollo";
+import { useReactiveVar } from "@apollo/client";
+import { createStackNavigator } from "@react-navigation/stack";
 
 interface StackNavigationProps {
   screenName: string;

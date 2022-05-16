@@ -1,5 +1,5 @@
-import { Keyboard, KeyboardAvoidingView, Platform } from "react-native";
 import styled from "styled-components/native";
+import { Keyboard, KeyboardAvoidingView, Platform } from "react-native";
 
 interface KeyboardAvoidingLayoutProps {
   children: React.ReactNode;

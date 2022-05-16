@@ -1,5 +1,5 @@
-import styled from "styled-components/native";
 import Loading from "./Loading";
+import styled from "styled-components/native";
 
 interface ButtonProps {
   onPress: () => void;

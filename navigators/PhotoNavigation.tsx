@@ -1,10 +1,10 @@
-import { useReactiveVar } from "@apollo/client";
-import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
-import { createStackNavigator } from "@react-navigation/stack";
-import { isDarkModeVar } from "../apollo";
-import SelectPhoto from "../screens/SelectPhoto";
 import TakePhoto from "../screens/TakePhoto";
+import SelectPhoto from "../screens/SelectPhoto";
 import Ionicons from "@expo/vector-icons/Ionicons";
+import { isDarkModeVar } from "../apollo";
+import { useReactiveVar } from "@apollo/client";
+import { createStackNavigator } from "@react-navigation/stack";
+import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
 
 const Tab = createMaterialTopTabNavigator();
 const Stack = createStackNavigator();

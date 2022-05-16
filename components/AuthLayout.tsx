@@ -1,7 +1,7 @@
-import { useReactiveVar } from "@apollo/client";
 import styled from "styled-components/native";
-import { isDarkModeVar } from "../apollo";
 import KeyboardAvoidingLayout from "./KeyboardAvoidingLayout";
+import { isDarkModeVar } from "../apollo";
+import { useReactiveVar } from "@apollo/client";
 
 interface AuthLayoutProps {
   children: React.ReactNode;

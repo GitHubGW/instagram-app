@@ -1,8 +1,8 @@
-import { useNavigation } from "@react-navigation/core";
-import { NativeStackNavigationProp } from "@react-navigation/native-stack";
-import styled from "styled-components/native";
-import { RootStackParamList } from "../shared/shared.types";
 import CreatedAt from "./CreatedAt";
+import styled from "styled-components/native";
+import { useNavigation } from "@react-navigation/core";
+import { RootStackParamList } from "../shared/shared.types";
+import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 
 type RoomItemNavigationProps = NativeStackNavigationProp<RootStackParamList>;
 
@@ -86,7 +86,7 @@ const RoomItem = ({ id, users, messages, totalUnreadMessages, otherUser, latestM
   return (
     <RoomContainer onPress={handleNavigateToRoomScreen}>
       <RoomUserContainer>
-        <Avatar source={{ uri: otherUser.avatarUrl }}></Avatar>
+        {otherUser.avatarUrl ? <Avatar source={{ uri: otherUser.avatarUrl }}></Avatar> : <Avatar source={require("../assets/basic_user.jpeg")} />}
         <Data>
           <Username>{otherUser.username}</Username>
           <UnreadText>{latestMessage?.text}</UnreadText>

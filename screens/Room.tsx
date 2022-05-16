@@ -1,17 +1,17 @@
-import { NativeStackScreenProps } from "@react-navigation/native-stack";
+import gql from "graphql-tag";
+import Loading from "../components/Loading";
+import styled from "styled-components/native";
+import Ionicons from "@expo/vector-icons/Ionicons";
+import MessageItem from "../components/MessageItem";
+import KeyboardAvoidingLayout from "../components/KeyboardAvoidingLayout";
+import { FlatList } from "react-native";
 import { useEffect, useState } from "react";
 import { useForm, Controller } from "react-hook-form";
-import { FlatList } from "react-native";
-import styled from "styled-components/native";
-import KeyboardAvoidingLayout from "../components/KeyboardAvoidingLayout";
-import Loading from "../components/Loading";
-import MessageItem from "../components/MessageItem";
-import { SeeRoomQuery, useMessageUpdatesSubscription, useSeeRoomQuery, useSendMessageMutation } from "../generated/graphql";
 import { RootStackParamList } from "../shared/shared.types";
-import Ionicons from "@expo/vector-icons/Ionicons";
+import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { ApolloCache, ApolloClient, Reference, useApolloClient } from "@apollo/client";
-import gql from "graphql-tag";
 import { MESSAGE_UPDATES_SUBSCRIPTION } from "../documents/subscriptions/messageUpdates.subscription";
+import { SeeRoomQuery, useMessageUpdatesSubscription, useSeeRoomQuery, useSendMessageMutation } from "../generated/graphql";
 
 type RoomNavigationProps = NativeStackScreenProps<RootStackParamList, "StackRoom">;
 
@@ -151,7 +151,7 @@ const Room = ({ navigation, route }: RoomNavigationProps) => {
     navigation.setOptions({
       headerTitle: () => (
         <UserContainer>
-          <Avatar source={{ uri: route.params?.otherUser.avatarUrl }} />
+          {route.params?.otherUser.avatarUrl ? <Avatar source={{ uri: route.params?.otherUser.avatarUrl }} /> : <Avatar source={require("../assets/basic_user.jpeg")} />}
           <Username>{route.params?.otherUser.username}</Username>
         </UserContainer>
       ),

@@ -1,11 +1,11 @@
-import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import { Ionicons } from "@expo/vector-icons";
 import Search from "../screens/Search";
-import StackNavigation from "./StackNavigation";
-import { useReactiveVar } from "@apollo/client";
-import { isDarkModeVar } from "../apollo";
-import useLoggedInUser from "../hooks/useLoggedInUser";
 import styled from "styled-components/native";
+import StackNavigation from "./StackNavigation";
+import useLoggedInUser from "../hooks/useLoggedInUser";
+import { isDarkModeVar } from "../apollo";
+import { Ionicons } from "@expo/vector-icons";
+import { useReactiveVar } from "@apollo/client";
+import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 
 const Tab = createBottomTabNavigator();
 
@@ -63,8 +63,8 @@ const TabNavigation = () => {
         name="TabMe"
         options={{
           tabBarIcon: ({ focused, color, size }): React.ReactNode =>
-            loggedInUser ? (
-              <AvatarImage focused={focused} source={{ uri: loggedInUser.avatarUrl || "" }} />
+            loggedInUser && loggedInUser.avatarUrl ? (
+              <AvatarImage focused={focused} source={{ uri: loggedInUser.avatarUrl }} />
             ) : (
               <Ionicons name={focused === true ? "person" : "person-outline"} size={26} color={color} />
             ),

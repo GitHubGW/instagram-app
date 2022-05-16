@@ -1,13 +1,13 @@
+import Loading from "../components/Loading";
 import styled from "styled-components/native";
 import KeyboardAvoidingLayout from "../components/KeyboardAvoidingLayout";
-import Loading from "../components/Loading";
-import { NativeStackScreenProps } from "@react-navigation/native-stack";
-import { RootStackParamList } from "../shared/shared.types";
-import { useForm, Controller } from "react-hook-form";
 import { useEffect } from "react";
-import { useUploadPhotoMutation } from "../generated/graphql";
-import { ReactNativeFile } from "apollo-upload-client";
 import { ApolloCache } from "@apollo/client";
+import { useForm, Controller } from "react-hook-form";
+import { ReactNativeFile } from "apollo-upload-client";
+import { RootStackParamList } from "../shared/shared.types";
+import { useUploadPhotoMutation } from "../generated/graphql";
+import { NativeStackScreenProps } from "@react-navigation/native-stack";
 
 type UploadPhotoNavigationProps = NativeStackScreenProps<RootStackParamList, "StackUploadPhotoNavigation">;
 

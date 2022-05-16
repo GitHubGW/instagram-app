@@ -1,11 +1,11 @@
-import { NativeStackScreenProps } from "@react-navigation/native-stack";
-import { MutableRefObject, RefObject, useRef } from "react";
+import Button from "../components/Button";
 import styled from "styled-components/native";
 import AuthLayout from "../components/AuthLayout";
-import Button from "../components/Button";
 import { Input } from "../components/shared";
-import { RootStackParamList } from "../shared/shared.types";
 import { useForm, Controller } from "react-hook-form";
+import { MutableRefObject, RefObject, useRef } from "react";
+import { RootStackParamList } from "../shared/shared.types";
+import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { CreateAccountMutation, useCreateAccountMutation } from "../generated/graphql";
 
 type SignUpNavigationProps = NativeStackScreenProps<RootStackParamList, "StackSignUp">;
@@ -33,7 +33,9 @@ const SignUp = ({ navigation }: SignUpNavigationProps) => {
         return;
       }
       const { username, password } = getValues();
-      navigation.navigate("Login", { username, password });
+      console.log("username, password", username, password);
+
+      navigation.navigate("StackLogin", { username, password });
     },
   });
 

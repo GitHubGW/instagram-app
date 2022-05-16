@@ -1,14 +1,14 @@
-import styled from "styled-components/native";
-import CommentItem from "../components/CommentItem";
 import Loading from "../components/Loading";
-import { NativeStackScreenProps } from "@react-navigation/native-stack";
-import { useEffect, useState } from "react";
+import styled from "styled-components/native";
+import CreatedAt from "../components/CreatedAt";
+import CommentItem from "../components/CommentItem";
 import { FlatList } from "react-native";
+import { useEffect, useState } from "react";
 import { Separator } from "../components/shared";
 import { useSeeCommentsQuery } from "../generated/graphql";
 import { RootStackParamList } from "../shared/shared.types";
-import CreatedAt from "../components/CreatedAt";
 import { TouchableOpacity } from "react-native-gesture-handler";
+import { NativeStackScreenProps } from "@react-navigation/native-stack";
 
 type CommentsNavigationProps = NativeStackScreenProps<RootStackParamList, "StackComments">;
 
@@ -102,7 +102,7 @@ const Comments = ({ navigation, route }: CommentsNavigationProps) => {
         <Container>
           <PhotoContainer>
             <TouchableOpacity onPress={handleNavigateToProfileNavigation}>
-              <Avatar source={{ uri: route.params.user.avatarUrl || "" }}></Avatar>
+              {route.params.user.avatarUrl ? <Avatar source={{ uri: route.params.user.avatarUrl || "" }}></Avatar> : <Avatar source={require("../assets/basic_user.jpeg")} />}
             </TouchableOpacity>
             <PhotoInfoContainer>
               <PhotoUserContainer>

@@ -1,9 +1,9 @@
-import { useReactiveVar } from "@apollo/client";
-import { createStackNavigator } from "@react-navigation/stack";
-import { isDarkModeVar } from "../apollo";
 import Enter from "../screens/Enter";
 import Login from "../screens/Login";
 import SignUp from "../screens/SignUp";
+import { isDarkModeVar } from "../apollo";
+import { useReactiveVar } from "@apollo/client";
+import { createStackNavigator } from "@react-navigation/stack";
 
 const Stack = createStackNavigator();
 

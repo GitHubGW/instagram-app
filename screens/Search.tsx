@@ -1,14 +1,14 @@
-import { useReactiveVar } from "@apollo/client";
-import { NativeStackScreenProps } from "@react-navigation/native-stack";
-import { useEffect, useState } from "react";
-import { useForm, Controller } from "react-hook-form";
-import { FlatList, ScaledSize, useWindowDimensions } from "react-native";
-import { TouchableOpacity } from "react-native-gesture-handler";
+import Loading from "../components/Loading";
 import styled from "styled-components/native";
 import { isDarkModeVar } from "../apollo";
-import Loading from "../components/Loading";
-import { useSearchPhotosLazyQuery } from "../generated/graphql";
+import { useEffect, useState } from "react";
+import { useReactiveVar } from "@apollo/client";
+import { useForm, Controller } from "react-hook-form";
 import { RootStackParamList } from "../shared/shared.types";
+import { useSearchPhotosLazyQuery } from "../generated/graphql";
+import { TouchableOpacity } from "react-native-gesture-handler";
+import { NativeStackScreenProps } from "@react-navigation/native-stack";
+import { FlatList, ScaledSize, useWindowDimensions } from "react-native";
 
 type SearchNavigationProps = NativeStackScreenProps<RootStackParamList, "StackSearch">;
 

@@ -1,10 +1,10 @@
+import Loading from "../components/Loading";
 import styled from "styled-components/native";
+import PhotoItem from "../components/PhotoItem";
+import { useEffect } from "react";
+import { useSeePhotoQuery } from "../generated/graphql";
 import { RootStackParamList } from "../shared/shared.types";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
-import { useSeePhotoQuery } from "../generated/graphql";
-import PhotoItem from "../components/PhotoItem";
-import Loading from "../components/Loading";
-import { useEffect } from "react";
 
 type PhotoNavigationProps = NativeStackScreenProps<RootStackParamList, "StackPhoto">;
 

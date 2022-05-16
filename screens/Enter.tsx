@@ -1,8 +1,8 @@
-import { NativeStackScreenProps } from "@react-navigation/native-stack";
-import { RootStackParamList } from "../shared/shared.types";
+import Button from "../components/Button";
 import styled from "styled-components/native";
 import AuthLayout from "../components/AuthLayout";
-import Button from "../components/Button";
+import { RootStackParamList } from "../shared/shared.types";
+import { NativeStackScreenProps } from "@react-navigation/native-stack";
 
 type EnterNavigationProps = NativeStackScreenProps<RootStackParamList, "StackEnter">;
 

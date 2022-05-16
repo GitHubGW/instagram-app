@@ -1,11 +1,11 @@
+import Loading from "./Loading";
+import styled from "styled-components/native";
+import useLoggedInUser from "../hooks/useLoggedInUser";
 import { ApolloCache } from "@apollo/client";
 import { useNavigation } from "@react-navigation/native";
-import { NativeStackNavigationProp } from "@react-navigation/native-stack";
-import styled from "styled-components/native";
-import { useFollowUserMutation, useUnfollowUserMutation } from "../generated/graphql";
-import useLoggedInUser from "../hooks/useLoggedInUser";
 import { RootStackParamList } from "../shared/shared.types";
-import Loading from "./Loading";
+import { NativeStackNavigationProp } from "@react-navigation/native-stack";
+import { useFollowUserMutation, useUnfollowUserMutation } from "../generated/graphql";
 
 type UserItemNavigationProps = NativeStackNavigationProp<RootStackParamList>;
 
@@ -142,7 +142,7 @@ const UserItem = ({ id, username, name, avatarUrl, isFollowing, isMe }: UserItem
   return (
     <Container>
       <UserContainer onPress={handleNavigateToProfileNavigation}>
-        <UserAvatar source={{ uri: avatarUrl }}></UserAvatar>
+        {avatarUrl ? <UserAvatar source={{ uri: avatarUrl }}></UserAvatar> : <UserAvatar source={require("../assets/basic_user.jpeg")} />}
         <UserInfoContainer>
           <Username>{username}</Username>
           <Name>{name}</Name>

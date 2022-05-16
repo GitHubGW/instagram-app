@@ -1,11 +1,11 @@
-import * as MediaLibrary from "expo-media-library";
 import styled from "styled-components/native";
 import Ionicons from "@expo/vector-icons/Ionicons";
+import * as MediaLibrary from "expo-media-library";
 import { useEffect, useState } from "react";
-import { FlatList, ScaledSize, useWindowDimensions } from "react-native";
-import { TouchableOpacity } from "react-native-gesture-handler";
 import { RootStackParamList } from "../shared/shared.types";
+import { TouchableOpacity } from "react-native-gesture-handler";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
+import { FlatList, ScaledSize, useWindowDimensions } from "react-native";
 
 type PhotoNavigationProps = NativeStackScreenProps<RootStackParamList, "StackPhotoNavigation">;
 

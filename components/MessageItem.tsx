@@ -1,7 +1,7 @@
-import { useNavigation } from "@react-navigation/core";
-import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import styled from "styled-components/native";
+import { useNavigation } from "@react-navigation/core";
 import { RootStackParamList } from "../shared/shared.types";
+import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 
 type MessageItemNavigationProps = NativeStackNavigationProp<RootStackParamList>;
 
@@ -79,7 +79,7 @@ const MessageItem = ({ id, text, read, createdAt, user, otherUser }: MessageItem
   ) : (
     <OtherMessageContainer>
       <AuthorContainer onPress={handleNavigateToProfileNavigation}>
-        <Avatar source={{ uri: user.avatarUrl }}></Avatar>
+        {user.avatarUrl ? <Avatar source={{ uri: user.avatarUrl }} /> : <Avatar source={require("../assets/basic_user.jpeg")} />}
       </AuthorContainer>
       <OtherMessage>{text}</OtherMessage>
     </OtherMessageContainer>

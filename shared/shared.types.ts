@@ -11,6 +11,7 @@ export type RootStackParamList = {
   StackSignUp: undefined;
   StackFeed: any;
   StackPhoto: { photoId: number };
+  StackNotification: any;
   StackProfile: any;
   StackLikes: { photoId: number };
   StackComments: { photoId: number; caption: string; createdAt: number; user: User };

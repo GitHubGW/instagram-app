@@ -1,12 +1,12 @@
-import { useReactiveVar } from "@apollo/client";
-import { NativeStackScreenProps } from "@react-navigation/native-stack";
-import { createStackNavigator } from "@react-navigation/stack";
-import { useEffect } from "react";
-import { isDarkModeVar } from "../apollo";
+import Profile from "../screens/Profile";
 import Followers from "../screens/Followers";
 import Followering from "../screens/Following";
-import Profile from "../screens/Profile";
+import { useEffect } from "react";
+import { isDarkModeVar } from "../apollo";
+import { useReactiveVar } from "@apollo/client";
 import { RootStackParamList } from "../shared/shared.types";
+import { createStackNavigator } from "@react-navigation/stack";
+import { NativeStackScreenProps } from "@react-navigation/native-stack";
 
 type ProfileNavigationProps = NativeStackScreenProps<RootStackParamList, "StackProfileNavigation">;
 

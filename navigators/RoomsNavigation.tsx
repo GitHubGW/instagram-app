@@ -1,8 +1,8 @@
-import Rooms from "../screens/Rooms";
 import Room from "../screens/Room";
-import { createStackNavigator } from "@react-navigation/stack";
-import { useReactiveVar } from "@apollo/client";
+import Rooms from "../screens/Rooms";
 import { isDarkModeVar } from "../apollo";
+import { useReactiveVar } from "@apollo/client";
+import { createStackNavigator } from "@react-navigation/stack";
 
 const Stack = createStackNavigator();
 

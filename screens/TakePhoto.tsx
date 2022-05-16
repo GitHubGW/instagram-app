@@ -1,5 +1,5 @@
-import * as MediaLibrary from "expo-media-library";
 import styled from "styled-components/native";
+import * as MediaLibrary from "expo-media-library";
 import Slider from "@react-native-community/slider";
 import { Camera, CameraCapturedPicture } from "expo-camera";
 import { CameraType, FlashMode } from "expo-camera/build/Camera.types";

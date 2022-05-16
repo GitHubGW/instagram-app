@@ -1,9 +1,9 @@
-import { useState } from "react";
-import styled from "styled-components/native";
 import Loading from "../components/Loading";
+import styled from "styled-components/native";
 import RoomItem from "../components/RoomItem";
-import { useSeeRoomsQuery } from "../generated/graphql";
 import useLoggedInUser from "../hooks/useLoggedInUser";
+import { useState } from "react";
+import { useSeeRoomsQuery } from "../generated/graphql";
 
 const Container = styled.View`
   background-color: ${(props) => props.theme.bgColor};

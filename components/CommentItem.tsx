@@ -1,9 +1,9 @@
-import { useNavigation } from "@react-navigation/core";
-import { NativeStackNavigationProp } from "@react-navigation/native-stack";
-import { TouchableOpacity } from "react-native";
-import styled from "styled-components/native";
-import { RootStackParamList } from "../shared/shared.types";
 import CreatedAt from "./CreatedAt";
+import styled from "styled-components/native";
+import { TouchableOpacity } from "react-native";
+import { useNavigation } from "@react-navigation/core";
+import { RootStackParamList } from "../shared/shared.types";
+import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 
 type CommentItemNavigationProps = NativeStackNavigationProp<RootStackParamList>;
 
@@ -71,7 +71,7 @@ const CommentItem = ({ text, createdAt, user }: CommentItemProps) => {
   return (
     <Container>
       <TouchableOpacity onPress={handleNavigateToProfileNavigation}>
-        <Avatar source={{ uri: user.avatarUrl }}></Avatar>
+        {user.avatarUrl ? <Avatar source={{ uri: user.avatarUrl }} /> : <Avatar source={require("../assets/basic_user.jpeg")} />}
       </TouchableOpacity>
       <CommentInfoContainer>
         <CommentUserContainer>

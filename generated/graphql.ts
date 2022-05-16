@@ -232,6 +232,7 @@ export type Query = {
   seeRecommendUsers: SeeRecommendUsersResult;
   seeRoom: SeeRoomResult;
   seeRooms: SeeRoomsResult;
+  seeUsers: SeeUsersResult;
 };
 
 
@@ -368,6 +369,13 @@ export type SeeHashtagResult = {
   ok: Scalars['Boolean'];
 };
 
+export type SeeMeResult = {
+  __typename?: 'SeeMeResult';
+  message: Scalars['String'];
+  ok: Scalars['Boolean'];
+  user?: Maybe<User>;
+};
+
 export type SeePhotoLikesResult = {
   __typename?: 'SeePhotoLikesResult';
   message: Scalars['String'];
@@ -415,6 +423,13 @@ export type SeeRoomsResult = {
   message: Scalars['String'];
   ok: Scalars['Boolean'];
   rooms?: Maybe<Array<Maybe<Room>>>;
+};
+
+export type SeeUsersResult = {
+  __typename?: 'SeeUsersResult';
+  message: Scalars['String'];
+  ok: Scalars['Boolean'];
+  users?: Maybe<Array<Maybe<User>>>;
 };
 
 export type SendMessageResult = {
@@ -490,13 +505,6 @@ export type User = {
 
 export type UserPhotosArgs = {
   cursor?: InputMaybe<Scalars['Int']>;
-};
-
-export type SeeMeResult = {
-  __typename?: 'seeMeResult';
-  message: Scalars['String'];
-  ok: Scalars['Boolean'];
-  user?: Maybe<User>;
 };
 
 export type CreateAccountMutationVariables = Exact<{
@@ -596,7 +604,7 @@ export type SeeFeedQuery = { __typename?: 'Query', seeFeed: { __typename?: 'SeeF
 export type SeeMeQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type SeeMeQuery = { __typename?: 'Query', seeMe: { __typename?: 'seeMeResult', ok: boolean, message: string, user?: { __typename?: 'User', id: number, name?: string | null, username: string, email: string, avatarUrl?: string | null, bio?: string | null, isMe: boolean } | null } };
+export type SeeMeQuery = { __typename?: 'Query', seeMe: { __typename?: 'SeeMeResult', ok: boolean, message: string, user?: { __typename?: 'User', id: number, name?: string | null, username: string, email: string, avatarUrl?: string | null, bio?: string | null, isMe: boolean } | null } };
 
 export type SeePhotoQueryVariables = Exact<{
   photoId: Scalars['Int'];
@@ -620,6 +628,11 @@ export type SeeProfileQueryVariables = Exact<{
 
 
 export type SeeProfileQuery = { __typename?: 'Query', seeProfile: { __typename?: 'SeeProfileResult', ok: boolean, message: string, user?: { __typename?: 'User', id: number, name?: string | null, username: string, bio?: string | null, avatarUrl?: string | null, totalFollowing: number, totalFollowers: number, totalPhotos: number, isFollowing: boolean, isMe: boolean, photos?: Array<{ __typename?: 'Photo', id: number, photoUrl: string, isLiked: boolean, totalLikes: number, totalComments: number, caption?: string | null, createdAt: string, user: { __typename?: 'User', id: number, name?: string | null, username: string, avatarUrl?: string | null } } | null> | null, following?: Array<{ __typename?: 'User', id: number, name?: string | null, username: string, avatarUrl?: string | null, isFollowing: boolean } | null> | null, followers?: Array<{ __typename?: 'User', id: number, name?: string | null, username: string, avatarUrl?: string | null, isFollowing: boolean } | null> | null } | null } };
+
+export type SeeRecommendPhotosQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type SeeRecommendPhotosQuery = { __typename?: 'Query', seeRecommendPhotos: { __typename?: 'SeeRecommendPhotosResult', ok: boolean, message: string, photos?: Array<{ __typename?: 'Photo', id: number, photoUrl: string, caption?: string | null, totalLikes: number, totalComments: number, isMe: boolean, isLiked: boolean, createdAt: string, user: { __typename?: 'User', id: number, name?: string | null, username: string, avatarUrl?: string | null }, hashtags?: Array<{ __typename?: 'Hashtag', id: number, name: string } | null> | null, comments?: Array<{ __typename?: 'Comment', id: number, text: string, isMe: boolean, createdAt: string, user: { __typename?: 'User', id: number, username: string, avatarUrl?: string | null } } | null> | null } | null> | null } };
 
 export type SeeRoomQueryVariables = Exact<{
   roomId: Scalars['Int'];
@@ -1399,6 +1412,72 @@ export function useSeeProfileLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions
 export type SeeProfileQueryHookResult = ReturnType<typeof useSeeProfileQuery>;
 export type SeeProfileLazyQueryHookResult = ReturnType<typeof useSeeProfileLazyQuery>;
 export type SeeProfileQueryResult = Apollo.QueryResult<SeeProfileQuery, SeeProfileQueryVariables>;
+export const SeeRecommendPhotosDocument = gql`
+    query SeeRecommendPhotos {
+  seeRecommendPhotos {
+    ok
+    message
+    photos {
+      id
+      photoUrl
+      caption
+      totalLikes
+      totalComments
+      isMe
+      isLiked
+      createdAt
+      user {
+        id
+        name
+        username
+        avatarUrl
+      }
+      hashtags {
+        id
+        name
+      }
+      comments {
+        id
+        text
+        isMe
+        createdAt
+        user {
+          id
+          username
+          avatarUrl
+        }
+      }
+    }
+  }
+}
+    `;
+
+/**
+ * __useSeeRecommendPhotosQuery__
+ *
+ * To run a query within a React component, call `useSeeRecommendPhotosQuery` and pass it any options that fit your needs.
+ * When your component renders, `useSeeRecommendPhotosQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useSeeRecommendPhotosQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useSeeRecommendPhotosQuery(baseOptions?: Apollo.QueryHookOptions<SeeRecommendPhotosQuery, SeeRecommendPhotosQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<SeeRecommendPhotosQuery, SeeRecommendPhotosQueryVariables>(SeeRecommendPhotosDocument, options);
+      }
+export function useSeeRecommendPhotosLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<SeeRecommendPhotosQuery, SeeRecommendPhotosQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<SeeRecommendPhotosQuery, SeeRecommendPhotosQueryVariables>(SeeRecommendPhotosDocument, options);
+        }
+export type SeeRecommendPhotosQueryHookResult = ReturnType<typeof useSeeRecommendPhotosQuery>;
+export type SeeRecommendPhotosLazyQueryHookResult = ReturnType<typeof useSeeRecommendPhotosLazyQuery>;
+export type SeeRecommendPhotosQueryResult = Apollo.QueryResult<SeeRecommendPhotosQuery, SeeRecommendPhotosQueryVariables>;
 export const SeeRoomDocument = gql`
     query SeeRoom($roomId: Int!) {
   seeRoom(roomId: $roomId) {

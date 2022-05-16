@@ -1,18 +1,18 @@
 import "react-native-gesture-handler";
-import { useEffect, useState } from "react";
+import * as Font from "expo-font";
 import AppLoading from "expo-app-loading";
 import Ionicons from "@expo/vector-icons/Ionicons";
-import * as Font from "expo-font";
-import { Asset } from "expo-asset";
-import { NavigationContainer } from "@react-navigation/native";
-import { Appearance, ColorSchemeName, StatusBar } from "react-native";
-import { darkTheme, lightTheme } from "./styles/themes";
-import { ThemeProvider } from "styled-components/native";
-import { ApolloProvider, useReactiveVar } from "@apollo/client";
 import LoggedInNavigation from "./navigators/LoggedInNavigation";
 import LoggedOutNavigation from "./navigators/LoggedOutNavigation";
-import client, { isLoggedInVar, tokenVar, cache, isDarkModeVar } from "./apollo";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import client, { isLoggedInVar, tokenVar, cache, isDarkModeVar } from "./apollo";
+import { Asset } from "expo-asset";
+import { useEffect, useState } from "react";
+import { darkTheme, lightTheme } from "./styles/themes";
+import { ThemeProvider } from "styled-components/native";
+import { NavigationContainer } from "@react-navigation/native";
+import { ApolloProvider, useReactiveVar } from "@apollo/client";
+import { Appearance, ColorSchemeName, StatusBar } from "react-native";
 import { AsyncStorageWrapper, persistCache } from "apollo3-cache-persist";
 
 const App = () => {

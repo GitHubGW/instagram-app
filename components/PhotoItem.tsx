@@ -1,13 +1,13 @@
-import { ScaledSize, TouchableOpacity, useWindowDimensions } from "react-native";
+import CreatedAt from "./CreatedAt";
 import styled from "styled-components/native";
+import { isDarkModeVar } from "../apollo";
 import { Ionicons } from "@expo/vector-icons";
-import { User, useToggleLikePhotoMutation } from "../generated/graphql";
 import { useNavigation } from "@react-navigation/core";
 import { RootStackParamList } from "../shared/shared.types";
-import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { ApolloCache, useReactiveVar } from "@apollo/client";
-import { isDarkModeVar } from "../apollo";
-import CreatedAt from "./CreatedAt";
+import { User, useToggleLikePhotoMutation } from "../generated/graphql";
+import { NativeStackNavigationProp } from "@react-navigation/native-stack";
+import { Platform, ScaledSize, TouchableOpacity, useWindowDimensions } from "react-native";
 
 type PhotoItemNavigationProps = NativeStackNavigationProp<RootStackParamList>;
 
@@ -22,10 +22,11 @@ interface PhotoItemProps {
   user?: User | null;
 }
 
-const Container = styled.ScrollView`
+const Container = styled.ScrollView<{ isWeb: boolean }>`
   background-color: ${(props) => props.theme.bgColor};
-  flex: 1;
+  flex: ${(props) => (props.isWeb === true ? "auto" : 1)};
   width: 100%;
+  height: 100%;
 `;
 
 const Header = styled.TouchableOpacity`
@@ -74,13 +75,13 @@ const CaptionContainer = styled.View`
   flex-direction: row;
   padding-right: 50px;
   width: 100%;
+  align-items: flex-start;
 `;
 
 const CaptionText = styled.Text`
   color: white;
   font-size: 16px;
   color: ${(props) => props.theme.textColor};
-  line-height: 22px;
 `;
 
 const SectionContainer = styled.View`
@@ -161,9 +162,9 @@ const PhotoItem = ({ id, caption, isLiked, isMe, photoUrl, totalComments, totalL
   };
 
   return (
-    <Container>
+    <Container isWeb={Platform.OS === "web"}>
       <Header onPress={handleNavigateToProfileNavigation}>
-        {user?.avatarUrl ? <Avatar source={{ uri: user?.avatarUrl }}></Avatar> : <Avatar source={require("../assets/basic_user.jpeg")}></Avatar>}
+        {user?.avatarUrl ? <Avatar source={{ uri: user?.avatarUrl }} /> : <Avatar source={require("../assets/basic_user.jpeg")} />}
         <UserInfoContainer>
           <Username>{user?.username}</Username>
           <Name>{user?.name}</Name>

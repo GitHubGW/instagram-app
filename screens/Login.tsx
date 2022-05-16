@@ -1,13 +1,13 @@
-import { NativeStackScreenProps } from "@react-navigation/native-stack";
-import { MutableRefObject, RefObject, useRef } from "react";
+import Button from "../components/Button";
 import styled from "styled-components/native";
 import AuthLayout from "../components/AuthLayout";
-import Button from "../components/Button";
-import { Input } from "../components/shared";
-import { RootStackParamList } from "../shared/shared.types";
-import { useForm, Controller } from "react-hook-form";
-import { LoginMutation, useLoginMutation } from "../generated/graphql";
 import { handleLogin } from "../apollo";
+import { Input } from "../components/shared";
+import { useForm, Controller } from "react-hook-form";
+import { MutableRefObject, RefObject, useRef } from "react";
+import { RootStackParamList } from "../shared/shared.types";
+import { LoginMutation, useLoginMutation } from "../generated/graphql";
+import { NativeStackScreenProps } from "@react-navigation/native-stack";
 
 type LoginNavigationProps = NativeStackScreenProps<RootStackParamList, "StackLogin">;
 
@@ -31,6 +31,7 @@ const Login = ({ route }: LoginNavigationProps) => {
       const {
         login: { ok, token },
       } = data;
+
       if (ok === true && token) {
         return handleLogin(token);
       }
@@ -43,10 +44,10 @@ const Login = ({ route }: LoginNavigationProps) => {
   };
 
   const onValid = (): void => {
-    const { username, password } = getValues();
     if (loginLoading === true) {
       return;
     }
+    const { username, password } = getValues();
     loginMutation({ variables: { username, password } });
   };
 

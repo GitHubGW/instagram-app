@@ -1,11 +1,11 @@
-import { NativeStackScreenProps } from "@react-navigation/native-stack";
-import { useEffect, useState } from "react";
-import { FlatList } from "react-native";
-import styled from "styled-components/native";
 import Loading from "../components/Loading";
+import styled from "styled-components/native";
 import UserItem from "../components/UserItem";
-import { useSeePhotoLikesQuery } from "../generated/graphql";
+import { FlatList } from "react-native";
+import { useEffect, useState } from "react";
 import { RootStackParamList } from "../shared/shared.types";
+import { useSeePhotoLikesQuery } from "../generated/graphql";
+import { NativeStackScreenProps } from "@react-navigation/native-stack";
 
 type LikesNavigationProps = NativeStackScreenProps<RootStackParamList, "StackLikes">;
 
