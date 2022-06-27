@@ -2,7 +2,6 @@ import Loading from "../components/Loading";
 import styled from "styled-components/native";
 import KeyboardAvoidingLayout from "../components/KeyboardAvoidingLayout";
 import { useEffect } from "react";
-import { ApolloCache } from "@apollo/client";
 import { useForm, Controller } from "react-hook-form";
 import { ReactNativeFile } from "apollo-upload-client";
 import { RootStackParamList } from "../shared/shared.types";
@@ -53,7 +52,7 @@ const HeaderRightText = styled.Text`
 const UploadPhotoNavigation = ({ navigation, route }: UploadPhotoNavigationProps) => {
   const { control, handleSubmit, getValues } = useForm<UploadPhotoFormData>();
   const [uploadPhotoMutation, { loading: uploadPhotoLoading }] = useUploadPhotoMutation({
-    update: (cache: ApolloCache<any>, { data }) => {
+    update: (cache, { data }) => {
       if (data?.uploadPhoto.ok === true) {
         cache.modify({
           id: "ROOT_QUERY",

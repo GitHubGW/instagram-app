@@ -146,7 +146,7 @@ const Profile = ({ navigation, route }: ProfileNavigationProps) => {
   const { data: seeProfileData, loading: seeProfileLoading, refetch } = useSeeProfileQuery({ variables: { username: route.params?.username } });
 
   const [followUserMutation, { loading: followUserLoading }] = useFollowUserMutation({
-    update: (cache: ApolloCache<any>, { data }) => {
+    update: (cache, { data }) => {
       if (data?.followUser.ok === false) {
         return;
       }
@@ -168,7 +168,7 @@ const Profile = ({ navigation, route }: ProfileNavigationProps) => {
     },
   });
   const [unfollowUserMutation, { loading: unfollowUserLoading }] = useUnfollowUserMutation({
-    update: (cache: ApolloCache<any>, { data }) => {
+    update: (cache, { data }) => {
       if (data?.unfollowUser.ok === false) {
         return;
       }

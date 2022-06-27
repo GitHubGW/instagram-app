@@ -1,7 +1,6 @@
 import Loading from "./Loading";
 import styled from "styled-components/native";
 import useLoggedInUser from "../hooks/useLoggedInUser";
-import { ApolloCache } from "@apollo/client";
 import { useNavigation } from "@react-navigation/native";
 import { RootStackParamList } from "../shared/shared.types";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
@@ -73,7 +72,7 @@ const UserItem = ({ id, username, name, avatarUrl, isFollowing, isMe }: UserItem
   const loggedInUser = useLoggedInUser();
   const navigation = useNavigation<UserItemNavigationProps>();
   const [followUserMutation, { loading: followUserLoading }] = useFollowUserMutation({
-    update: (cache: ApolloCache<any>, { data }) => {
+    update: (cache, { data }) => {
       if (data?.followUser.ok === false) {
         return;
       }
@@ -95,7 +94,7 @@ const UserItem = ({ id, username, name, avatarUrl, isFollowing, isMe }: UserItem
     },
   });
   const [unfollowUserMutation, { loading: unfollowUserLoading }] = useUnfollowUserMutation({
-    update: (cache: ApolloCache<any>, { data }) => {
+    update: (cache, { data }) => {
       if (data?.unfollowUser.ok === false) {
         return;
       }

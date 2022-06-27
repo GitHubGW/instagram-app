@@ -78,7 +78,7 @@ const Room = ({ navigation, route }: RoomNavigationProps) => {
   const { data: messageUpdatesData } = useMessageUpdatesSubscription({ variables: { roomId: route.params?.id } });
   const { data: seeRoomData, loading: seeRoomLoading, refetch, subscribeToMore } = useSeeRoomQuery({ variables: { roomId: route.params?.id } });
   const [sendMessageMutation, { loading: sendMessageLoading }] = useSendMessageMutation({
-    update: (cache: ApolloCache<any>, { data }) => {
+    update: (cache, { data }) => {
       if (data?.sendMessage.ok === false) {
         return;
       }
